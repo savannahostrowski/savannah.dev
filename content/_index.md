@@ -1,4 +1,5 @@
 +++
+layout = "single"
 title = "Hey there, I'm Savannah!"
 +++
 
