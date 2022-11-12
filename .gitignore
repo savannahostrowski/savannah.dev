@@ -21,3 +21,4 @@
 go.work
 
 .hugo_build.lock
+.azure
