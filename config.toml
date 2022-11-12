@@ -1,0 +1,32 @@
+baseURL = '/'
+languageCode = 'en-us'
+title = 'Savannah Ostrowski'
+
+[params]
+
+themeColor="pink"
+showMenuItems=3
+showLanguageSelector=false
+fullWidthTheme=false
+centerTheme=false
+autoCover = true
+showLastUpdated= false
+
+[languages]
+  [languages.en]
+    [languages.en.params.logo]
+      logoText = "Savannah Ostrowski"
+      name = "Home"
+      logoHomeLink = "/"
+      identifier="home"
+
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/"
+
+      [[languages.en.menu.main]]
+        identifier = "appearances"
+        name = "Appearances + Articles"
+        url = "/appearances"
+
