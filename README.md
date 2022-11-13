@@ -15,4 +15,6 @@ If you want to give it a shot:
 
 
 ## Customization
+You will want to update or remove the backlink to Mastodon in `src/themes/hugo-theme-terminal/layouts/_default/single.html` on line 5. I wanted my website link to be verified :)
+
 If you're interested in making your own, easy-to-deploy site using this template, you can check out the [this config.toml](https://github.com/panr/hugo-theme-terminal#how-to-configure)
