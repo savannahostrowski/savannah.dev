@@ -1,5 +1,5 @@
 # Savannah's Personal Site
-This sis my personal website, written in Go using Hugo via the [Terminal theme](https://github.com/panr/hugo-theme-terminal). This site is compatible with [the Azure Developer CLI (`azd`)](https://github.com/azure/azure-dev) such that it can have its infrastructure provisioned and its code deployed in a single step via `azd up` (hosted on Azure Container Apps).
+This is my personal website, written in Go using Hugo via the [Terminal theme](https://github.com/panr/hugo-theme-terminal). This site is compatible with [the Azure Developer CLI (`azd`)](https://github.com/azure/azure-dev) such that it can have its infrastructure provisioned and its code deployed in a single step via `azd up` (hosted on Azure Container Apps).
 
 ![](assets/site.png)
 
