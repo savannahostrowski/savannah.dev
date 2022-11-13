@@ -14,6 +14,6 @@ I've also worked at Google/Android on multi-device developer experience on the [
 I'm pretty much always learning about something. Right now it's Go, cloud native architecture, containers, K8s and infrastructure as code.
 
 # Let's chat
-- [Mastodon](https://fosstodon.org/@savannah)<a rel="me" href="https://fosstodon.org/@savannah"> </a>
+- <a rel="me" href="https://fosstodon.org/@savannah">Mastodon</a>
 - [GitHub](https://github.com/savannahostrowski)
 - [Twitter](https://twitter.com/savostrowski)
