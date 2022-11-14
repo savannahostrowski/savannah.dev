@@ -6,12 +6,14 @@ This is my personal website, written in Go using Hugo via the [Terminal theme](h
 ## Provision and Deploy
 If you want to give it a shot:
 1. Install [the Azure Developer CLI](https://aka.ms/azd) and its dependencies
+1. Install [Go](https://go.dev/doc/install) and [Hugo](https://gohugo.io/installation/)
 1. Run `azd up -t savannahostrowski/terminal-personal-site`
 1. Pass in an environment name, Azure subscription and region
 1. Watch magic happen.
 
 ## Local Development
 1. Navigate into the `src/` directory and run `hugo server -t hugo-theme-terminal`
+1. Visit `localhost:1313` for changes
 
 
 ## Customization
