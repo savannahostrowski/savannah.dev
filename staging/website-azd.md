@@ -174,9 +174,3 @@ Because I already ran `azd init` to pull the template code down into my project,
 After running this, you'll see each resource created for you with unique identifiers that you can reference in the Azure Portal (if you need) and then a URL where your application is up and running! 
 
 
-# Next steps
-So that's how I initially got my website set up to run in the cloud. Now anytime I want to make an update to the site's core code or author a new blog post, I can just run `azd deploy` and the CLI takes care of that for me.
-
-In the future, I'll look to add monitoring + CI/CD to the site, as well as investigate how I might be able to automate cross-publishing my blog posts from my website to dev.to/Medium/etc.
-
-

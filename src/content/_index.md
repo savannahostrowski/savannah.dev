@@ -13,6 +13,8 @@ I've also worked at Google/Android on multi-device developer experience on the [
 
 I'm pretty much always learning about something. Right now it's Go, cloud native architecture, containers, K8s and infrastructure as code.
 
+_This site is all open source code. You can find the code [here](https://github.com/savannahostrowski/terminal-personal-site). It's also an Azure Developer CLI template._
+
 # Let's chat
 - [Mastodon](https://fosstodon.org/@savannah)
 - [GitHub](https://github.com/savannahostrowski)
