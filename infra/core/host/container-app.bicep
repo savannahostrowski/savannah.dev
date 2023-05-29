@@ -82,7 +82,6 @@ resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificat
   parent: containerAppsEnvironment
 }
 
-// 2022-02-01-preview needed for anonymousPullEnabled
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-02-01-preview' existing = {
   name: !empty(containerRegistryName) ? containerRegistryName : '${abbrs.containerRegistryRegistries}${resourceToken}'
 }
