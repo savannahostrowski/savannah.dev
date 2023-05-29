@@ -1,0 +1,24 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "Hugo Terminal-Themed Site",
+	"build":{
+		"dockerfile": "Dockerfile"
+
+	},
+	"features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+        }
+    },
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.go",
+				"ms-azuretools.vscode-docker",
+				"ms-azuretools.azure-dev"
+			]
+		}
+	}
+}
