@@ -28,7 +28,6 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
         external: external
         targetPort: targetPort
         transport: 'auto'
-        // TODO: You will need to update this with your own custom domain (line 34)
         customDomains: [
           {
             name: 'savannahostrowski.com'
@@ -77,8 +76,7 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-03-01'
   name: !empty(containerAppsEnvironmentName) ? containerAppsEnvironmentName : '${abbrs.appManagedEnvironments}${resourceToken}'
 }
 
-// TODO: You need to update the name to match what's in the CAE managed certs for the environment (added via Portal or via Azure CLI)
-// You will want to comment this and the custom domains section in the container app environment out (line 32-38) for first provision.
+// TODO: Maybe find a better way to do this?
 resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' existing = {
   name: 'savannahostrowski.com-rg-perso-230529183753'
   parent: containerAppsEnvironment
