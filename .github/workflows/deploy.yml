@@ -31,10 +31,11 @@ jobs:
       - name: Install azd
         run: curl -fsSL https://aka.ms/install-azd.sh | bash
 
-      - name: Install node
-        uses: actions/setup-node@v3
+      - name: Install Go
+        uses: actions/setup-go@v4
         with:
-          node-version: 18
+          go-version: '^1.20'
+      - run: go version
 
       - name: Install Python 3.11
         uses: actions/setup-python@v4 
