@@ -15,7 +15,7 @@ var abbrs = loadJsonContent('../../abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
 
-resource app 'Microsoft.App/containerApps@2022-03-01' = {
+resource app 'Microsoft.App/containerApps@2022-10-01' = {
   name: '${abbrs.appContainerApps}${serviceName}-${resourceToken}'
   location: location
   tags: union(tags, { 'azd-service-name': serviceName })
@@ -28,6 +28,14 @@ resource app 'Microsoft.App/containerApps@2022-03-01' = {
         external: external
         targetPort: targetPort
         transport: 'auto'
+        // TODO: You will need to update this with your own custom domain (line 34)
+        customDomains: [
+          {
+            name: 'savannahostrowski.com'
+            certificateId: managedCertificate.id
+            bindingType: 'SniEnabled'
+          }
+        ]
       }
       secrets: [
         {
@@ -69,6 +77,13 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-03-01'
   name: !empty(containerAppsEnvironmentName) ? containerAppsEnvironmentName : '${abbrs.appManagedEnvironments}${resourceToken}'
 }
 
+// TODO: You need to update the name to match what's in the CAE managed certs for the environment (added via Portal or via Azure CLI)
+// You will want to comment this and the custom domains section in the container app environment out (line 32-38) for first provision.
+resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' existing = {
+  name: 'savannahostrowski.com-rg-perso-230529183753'
+  parent: containerAppsEnvironment
+}
+
 // 2022-02-01-preview needed for anonymousPullEnabled
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-02-01-preview' existing = {
   name: !empty(containerRegistryName) ? containerRegistryName : '${abbrs.containerRegistryRegistries}${resourceToken}'
@@ -77,3 +92,4 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-02-01-pr
 output identityPrincipalId string = managedIdentity ? app.identity.principalId : ''
 output name string = app.name
 output uri string = 'https://${app.properties.configuration.ingress.fqdn}'
+output containerAppEnvName string = containerAppsEnvironmentName

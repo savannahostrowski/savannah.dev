@@ -22,4 +22,4 @@ go.work
 
 .hugo_build.lock
 .azure
-.resources/
+src/resources/_gen
