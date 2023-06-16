@@ -5,7 +5,7 @@ This is my personal website, written in Go using Hugo via the [Terminal theme](h
 
 ## Provision and Deploy
 If you want to give it a shot:
-1. Install [the Azure Developer CLI](https://aka.ms/azd) and its dependencies
+1. Install [the Azure Developer CLI](https://aka.ms/azd)
 2. Install [Go](https://go.dev/doc/install) and [Hugo](https://gohugo.io/installation/)
 3. Run the following command to initialize the project.
 
@@ -13,11 +13,9 @@ If you want to give it a shot:
 azd init --template savannahostrowski/terminal-personal-site
 ```
 
-This command will clone the code to your current folder and prompt you for the following information:
+This command will clone the code to your current folder and prompt you for an environment name. The environment name will be used as a prefix for the resource group that will be created to hold all Azure resources. This name should be unique within your Azure subscription.
 
-- `Environment Name`: This will be used as a prefix for the resource group that will be created to hold all Azure resources. This name should be unique within your Azure subscription.
-
-4. Run the following command to build a deployable copy of your application, provision the template's infrastructure to Azure and also deploy the applciation code to those newly provisioned resources.
+4. Run the following command to get the application up on Azure.
 
 ```bash
 azd up
@@ -27,7 +25,7 @@ This command will prompt you for the following information:
 - `Azure Location`: The Azure location where your resources will be deployed.
 - `Azure Subscription`: The Azure Subscription where your resources will be deployed.
 
-> NOTE: This may take a while to complete as it executes three commands: `azd package` (builds a deployable copy of your application), `azd provision` (provisions Azure resources), and `azd deploy` (deploys application code). You will see a progress indicator as it packages, provisions and deploys your application.
+> NOTE: This may take a couple of minutes to complete as `azd` executes three commands: `azd package` (builds a deployable copy of your application), `azd provision` (provisions Azure resources), and `azd deploy` (deploys application code). You will see a progress indicator as it packages, provisions and deploys your application.
 
 5. Watch magic happen.
 
