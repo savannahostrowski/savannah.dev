@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install azd
-        run: curl -fsSL https://aka.ms/install-azd.sh | bash
+        uses: Azure/setup-azd@v0.1.0
 
       - name: Install Go
         uses: actions/setup-go@v4
