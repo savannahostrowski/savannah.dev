@@ -5,7 +5,7 @@ metadata:
   template: terminal-personal-site-hugo@0.0.1-beta
 services:
   web:
-    project: ./
+    project: .
     # This is a hack as azd does not currently support language:none
     language: py
     module: app/web
