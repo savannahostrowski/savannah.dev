@@ -1,8 +1,6 @@
 # Savannah's Personal Site
 This is my personal website, written in Go using Hugo via the [Terminal theme](https://github.com/panr/hugo-theme-terminal).
 
-![](assets/site.png)
-
 ## Provision and Deploy
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/savannahostrowski/terminal-personal-site?devcontainer_path=.devcontainer/devcontainer.json)
 1. Open in Codespace/Dev Container
