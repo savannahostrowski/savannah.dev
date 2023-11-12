@@ -2,3 +2,5 @@ azure.yaml
 .devcontainer/
 .azure/
 infra/
+.github/
+
