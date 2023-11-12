@@ -1,0 +1,4 @@
+azure.yaml
+.devcontainer/
+.azure/
+infra/

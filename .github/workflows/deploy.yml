@@ -30,14 +30,11 @@ jobs:
 
       - name: Install azd
         uses: Azure/setup-azd@v0.1.0
-
-      - uses: peaceiris/actions-hugo@16361eb4acea8698b220b76c0d4e84e1fd22c61d # v2
+      - name: Install Go
+        uses: actions/setup-go@v4
         with:
-          hugo-version: ${{ env.HUGO_VERSION }}
-          extended: true
-
-      - run: hugo
-  
+          go-version: '^1.20'
+      - run: go version
       - name: Log in with Azure (Federated Credentials)
         if: ${{ env.AZURE_CLIENT_ID != '' }}
         run: |
@@ -46,14 +43,12 @@ jobs:
             --federated-credential-provider "github" `
             --tenant-id "$Env:AZURE_TENANT_ID"
         shell: pwsh
-
       - name: Provision Infrastructure
         run: azd provision --no-prompt
         env:
           AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
           AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-          
       - name: Deploy Application
         run: azd deploy --no-prompt
         env:
