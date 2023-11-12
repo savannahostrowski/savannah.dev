@@ -1,0 +1,33 @@
+baseURL: '/'
+languageCode: en-us
+title: Savannah Ostrowski
+theme: PaperMod
+
+params:
+  env: production
+  description: >
+    I work on the Azure DevEx team at Microsoft on cloud native developer tools and experiences. In particular, I am the product lead for the Azure Developer CLI (azd). Previously:
+    Pylance/Python Developer Experience at Microsoft, Cross Device SDK at Google/Android + software engineer at startups/consultancies.
+
+  homeInfoParams:
+    title: "Hey👋! I'm Savannah."
+    content: >
+      I work on the Azure DevEx team at Microsoft on cloud native developer tools and experiences. In particular, I am the product lead for the Azure Developer CLI (azd). Previously:
+      Pylance/Python Developer Experience at Microsoft, Cross Device SDK at Google/Android + software engineer at startups/consultancies.
+
+  socialIcons:
+    - name: github
+      url: 'https://github.com/savannahostrowski'
+    - name: bluesky
+      url: 'https://bsky.app/profile/savannah.dev'
+    - name: mastodon
+      url: 'https://fosstodon.org/@savannah'
+    - name: twitter
+      url: 'https://twitter.com/savostrowski'
+    - name: linkedin
+      url: 'https://linkedin.com/in/savannahostrowski'
+    - name: youtube
+      url: 'https://youtube.com/playlist?list=PLq8oMtzrBmrgGXsW1theGfIwDu8ShD5hp&si=v49B7de8avnd-Rvx'
+
+  schema:
+    publisherType: Person
