@@ -36,17 +36,6 @@ jobs:
         with:
           go-version: '^1.20'
       - run: go version
-
-      - name: Create filter to check if infra/ has changed
-        uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            infra:
-              - 'infra/**'
-            appcode:
-              - 'src/**'
-
       - name: Log in with Azure (Federated Credentials)
         if: ${{ env.AZURE_CLIENT_ID != '' }}
         run: |
@@ -55,17 +44,7 @@ jobs:
             --federated-credential-provider "github" `
             --tenant-id "$Env:AZURE_TENANT_ID"
         shell: pwsh
-
-      - name: Refresh the environment to grab values when re-provisioning is not needed
-        if: steps.filter.outputs.infra == 'false'
-        run: azd env refresh --no-prompt
-        env:
-          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
-          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
-          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Provision Infrastructure, if infra/ has changed
-        if: steps.filter.outputs.infra == 'true'
+      - name: Provision Infrastructure
         run: azd provision --no-prompt
         env:
           AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
@@ -73,7 +52,6 @@ jobs:
           AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name: Deploy Application
-        if: steps.filter.outputs.appcode == 'true'
         run: azd deploy --no-prompt
         env:
           AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
