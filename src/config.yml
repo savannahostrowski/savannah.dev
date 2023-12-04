@@ -5,16 +5,16 @@ theme: PaperMod
 
 params:
   env: production
-  description: >
-    I work on the Azure DevEx team at Microsoft on cloud native developer tools and experiences. In particular, I am the product lead for the Azure Developer CLI (azd). Previously:
-    Pylance/Python Developer Experience at Microsoft, Cross Device SDK at Google/Android + software engineer at startups/consultancies.
-
+  description: "
+    I work on the Azure DevEx team at Microsoft on cloud native developer tools and experiences.
+    In particular, I am the product lead for the Azure Developer CLI (azd). Before that, I:
+    *  Worked on drone reforestation software with Python as the first engineering hire at a seed-stage startup
+    *  Built the data ingestion pipeline and platform that powers mapping software on millions of devices worldwide
+    *  Was the inaugural product manager for the Pylance language server, powering Python developer experience for millions
+    *  Managed a cross-product program focused on simplifying multi-device experiences for developers across any platform, operating system, or form factor
+    "
   homeInfoParams:
     title: "Hey👋! I'm Savannah."
-    content: >
-      I work on the Azure DevEx team at Microsoft on cloud native developer tools and experiences. In particular, I am the product lead for the Azure Developer CLI (azd). Previously:
-      Pylance/Python Developer Experience at Microsoft, Cross Device SDK at Google/Android + software engineer at startups/consultancies.
-
   socialIcons:
     - name: github
       url: 'https://github.com/savannahostrowski'

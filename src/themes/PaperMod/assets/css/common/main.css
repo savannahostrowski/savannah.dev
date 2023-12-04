@@ -66,3 +66,19 @@ div.highlight:hover .copy-code,
 pre:hover .copy-code {
     display: block;
 }
+.entry-content p {
+    margin-bottom: 10px;
+}
+
+.body-link{
+    font-weight: 700;
+}
+
+.body-link:hover {
+    text-decoration: underline;
+}
+
+.cool-things {
+    padding-inline-start: 20px;
+    padding-bottom: 20px;
+}
