@@ -6,22 +6,19 @@ theme: PaperMod
 params:
   env: production
   description: "
-    I work on the Azure DevEx team at Microsoft on cloud native developer tools and experiences.
-    In particular, I am the product lead for the Azure Developer CLI (azd). Before that, I:
+    I work on on the Runtime team at Docker as the product lead for the Docker Engine, Docker CLI, WebAssembly support and other foundational components.
+    Before that, I:
     *  Worked on drone reforestation software with Python as the first engineering hire at a seed-stage startup
     *  Built the data ingestion pipeline and platform that powers mapping software on millions of devices worldwide
     *  Was the inaugural product manager for the Pylance language server, powering Python developer experience for millions
     *  Managed a cross-product program focused on simplifying multi-device experiences for developers across any platform, operating system, or form factor
+    *  Shipped a 0 -> 1 product that made it easier for developers to go from local dev environment to one of the largest cloud service providers in the world
     "
   homeInfoParams:
     title: "Hey👋! I'm Savannah."
   socialIcons:
     - name: github
       url: 'https://github.com/savannahostrowski'
-    - name: bluesky
-      url: 'https://bsky.app/profile/savannah.dev'
-    - name: mastodon
-      url: 'https://fosstodon.org/@savannah'
     - name: twitter
       url: 'https://twitter.com/savostrowski'
     - name: linkedin
