@@ -6,7 +6,3 @@ This is my personal website, written in Go using Hugo.
 ## Local Development
 1. Run `hugo server` in `src/`
 1. Visit `localhost:1313` for changes
-
-## Deployment
-1. Run `hugo` in `src/` to build static assets.
-1. Deployment is handled via the GitHub Action pipeline (via `azd`)

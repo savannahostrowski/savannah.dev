@@ -1,0 +1,20 @@
+{{ if .Permalink }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- with .Lastmod }}{{ if not .IsZero }}
+    <lastmod>{{ safeHTML ( .Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>{{ end }}{{ end }}{{ with .Sitemap.ChangeFreq }}
+    <changefreq>{{ . }}</changefreq>
+    {{ end }}{{ with .Sitemap.Priority }}{{ if ge . 0.0 }}
+    <priority>{{ . }}</priority>{{ end }}{{ end }}{{ if .IsTranslated }}{{ range .Translations }}
+      <xhtml:link
+                  rel="alternate"
+                  hreflang="{{ .Language.Lang }}"
+                  href="{{ .Permalink }}"
+                  />{{ end }}
+      <xhtml:link
+                rel="alternate"
+                hreflang="{{ .Language.Lang }}"
+                href="{{ .Permalink }}"
+                />{{ end }}
+  </url>
+{{ end -}}

@@ -1,0 +1,52 @@
+baseURL: https://savannahostrowski.com/
+languageCode: en-us
+title: Savannah Ostrowski
+theme: github.com/adityatelange/hugo-PaperMod
+
+params:
+  env: production
+  description: >
+      I'm a Staff Product Manager at Docker.
+
+  homeInfoParams:
+    title: "Hey👋! I'm Savannah."
+    description: >
+      I'm a Staff Product Manager at Docker.
+
+  socialIcons:
+    - name: github
+      url: 'https://github.com/savannahostrowski'
+    - name: twitter
+      url: 'https://twitter.com/savostrowski'
+    - name: linkedin
+      url: 'https://linkedin.com/in/savannahostrowski'
+    - name: youtube
+      url: 'https://youtube.com/playlist?list=PLq8oMtzrBmrgGXsW1theGfIwDu8ShD5hp&si=v49B7de8avnd-Rvx'
+
+  showReadingTime: true
+  showPostNavLinks: true
+  showCodeCopyButtons: true
+  showFullTextInRSS: true
+  showRssButtonInSectionTermList: true
+  showWordCount: true
+  showToc: true
+  showShareButtons: true
+
+
+  schema:
+    publisherType: Person
+
+menu:
+  main:
+    - name: About
+      url: /
+      weight: 5
+    - name: Archive
+      url: /archives
+      weight: 10
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
