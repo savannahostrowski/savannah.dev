@@ -26,4 +26,4 @@ jobs:
           context: src/
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: savannahostrowski/savannahdev:latest
+          tags: savannahostrowski/savannah.dev:latest
