@@ -51,7 +51,7 @@ I'll be honest – I initially planned to set up the cluster with Kubernetes via
 
 - Choose one of your Pis to be your Swarm leader.
 - Run `docker swarm init` in the Swarm leader's terminal.
-- Copy the generated command and token (docker swarm join).
+- Copy the generated command and token (`docker swarm join`).
 - Paste the `docker swarm join` command into the other Pi terminals.
 - Boom! You have yourself a cluster ✨
   
@@ -63,7 +63,7 @@ Seriously, it's that simple! You can validate that everything is working as expe
 
 ### Step 4: Write the `docker-compose.yml` for your services
 
-Time to get to defining our services! In this case, I had two websites I wanted to host: 1) my [personal website](https://savannahostrowski.com) (where you're reading this post!) and 2) an [uber-professional website](https://getshreked.com) that is an inside joke.
+Time to get to defining our services! In this case, I had two websites I wanted to host: 1) my [personal website](https://savannahostrowski.com) (where you're reading this post!) and 2) an [uber-professional website](https://getshreked.com) that's an inside joke.
 
 If you're familiar with Docker, this part is quite straightforward. I had already pushed my website images up to Docker Hub, so this was a pretty quick operation. The only Swarm-specific thing I needed to do is to tell Docker that I had a custom network called `arrakis` and then make sure that my services connect to it.
 
