@@ -45,8 +45,6 @@ After assembling the cluster physically, it was time to sort out the software bi
 
 Then, I waited for each of them to appear on my home network and grabbed their IP addresses and made note of which Pi had which IP address. After that, I ssh'd into each one and [installed Docker](https://docs.docker.com/engine/install/debian/) using the official release (which gets updated more frequently than Docker distributed via distros...heck yes, Moby 26 is out!). I had 3 different terminal tabs opened while I was working so I could switch between them quickly.
 
-Next, I waited for each Pi to appear on my home network, grabbed their IP addresses, and noted which Pi had which IP address. Then, I SSH'd into each one and installed [Docker](https://docs.docker.com/engine/install/debian/) )using the official release (which gets updated more frequently – Moby 26 is out!). I had 3 different terminal tabs open while working, allowing me to switch between them quickly.
-
 ### Step 3: Create the cluster using Docker Swarm
 
 I'll be honest – I initially planned to set up the cluster with Kubernetes via k3s, but boy howdy, that gave me so many problems right from the get-go. Also, it's a bit of a meme to [host your blog on Kubernetes](https://twitter.com/dexhorthy/status/856639005462417409), so I quickly changed my plan and decided to use Swarm instead. Setting this up was truly magical, save for one snag. Here's how it works:
@@ -64,8 +62,6 @@ Seriously, it's that simple! You can validate that everything is working as expe
 
 
 ### Step 4: Write the `docker-compose.yml` for your services
-
-Time to define our services! In this case, I had two websites I wanted to host: 1) my [personal website](https://savannahostrowski.com) and
 
 Time to get to defining our services! In this case, I had two websites I wanted to host: 1) my [personal website](https://savannahostrowski.com) (where you're reading this post!) and 2) an [uber-professional website](https://getshreked.com) that is an inside joke.
 
