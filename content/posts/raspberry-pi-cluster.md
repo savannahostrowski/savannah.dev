@@ -56,7 +56,7 @@ I'll be honest – I initially planned to set up the cluster with Kubernetes via
 - Copy the generated command and token (docker swarm join).
 - Paste the `docker swarm join` command into the other Pi terminals.
 - Boom! You have yourself a cluster ✨
-- 
+  
 Seriously, it's that simple! You can validate that everything is working as expected using `docker node ls` on any of your nodes.
 ![Output of docker node ls, with three nodes all in ready state](../docker-node-ls.png)
 

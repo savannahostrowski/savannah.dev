@@ -154,6 +154,10 @@
     border-radius: var(--radius);
 }
 
+.hljs-number {
+    color: var(--secondary) !important;
+}
+
 .post-content .highlight:not(table) {
     margin: 10px auto;
     background: var(--hljs-bg) !important;
@@ -196,6 +200,7 @@
     font-size: 0.78em;
     line-height: 1.5;
     background: var(--code-bg);
+    color: var(--secondary);
     border-radius: 2px;
 }
 
@@ -203,7 +208,7 @@
     display: block;
     margin: auto 0;
     padding: 10px;
-    color: rgb(213, 213, 214);
+    color: var(--secondary);
     background: var(--hljs-bg) !important;
     border-radius: var(--radius);
     overflow-x: auto;
@@ -256,7 +261,7 @@
 .toc {
     margin: 0 2px 40px 2px;
     border: 1px solid var(--border);
-    background: var(--code-bg);
+    background: var(--secondary);
     border-radius: var(--radius);
     padding: 0.4em;
 }
@@ -305,7 +310,7 @@
 .post-tags a,
 .share-buttons {
     border-radius: var(--radius);
-    background: var(--code-bg);
+    background: var(--secondary);
     border: 1px solid var(--border);
 }
 
