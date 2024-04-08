@@ -30,7 +30,6 @@ params:
   showRssButtonInSectionTermList: true
   showWordCount: true
   showToc: true
-  showShareButtons: true
 
 
   schema:
