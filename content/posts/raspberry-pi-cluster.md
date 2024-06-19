@@ -15,7 +15,7 @@ You might be wondering, "Savannah, why do this? Didn't you used to work on Azure
 
 Alright, I might have had Dune on the brain when I built this, but Dune Part Two is literally a masterpiece, so can you blame me? My little rig consists of 3 Raspberry Pi 4Bs (each with 4 CPUs and 8 GB RAM), all running Raspberry Pi OS Lite (64-bit), which is a port of Debian Bullseye without a desktop environment. Each of these devices uses Power over Ethernet (PoE) for networking and power over a single cable per Pi. I'll delve into this a bit later, but it's worth noting that the cluster doesn't run Kubernetes; instead, it leverages Docker Swarm to create the cluster (it's literally 2 commands to configure everything – mind blown!).
 
-![alt text](../cluster-1.png)
+![A photo of the cluster sitting in my closet](../cluster-1.png)
 
 ### Materials for the build
 

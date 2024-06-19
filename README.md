@@ -4,5 +4,7 @@
 This is my personal website, written in Go using Hugo.
 
 ## Local Development
-1. Run `hugo server` in `src/`
+1. Run `hugo server`.
 1. Visit `localhost:1313` for changes
+
+## 
