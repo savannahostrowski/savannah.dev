@@ -5,6 +5,5 @@ summary: "Just some quick links"
 description: "Just some quick links"
 ---
 
-- [PEP 774 - Removing the LLVM requirement for JIT builds ](https://peps.python.org/pep-0744/)
-
 - [PEP 744 - JIT Compilation](https://peps.python.org/pep-0744/)
+- [PEP 774 - Removing the LLVM requirement for JIT builds ](https://peps.python.org/pep-0774/)

@@ -7,4 +7,7 @@ This is my personal website, written in Go using Hugo.
 1. Run `hugo server`.
 1. Visit `localhost:1313` for changes
 
-## 
+## Deployment
+- Push to main
+- Log into cluster
+- Run `sudo docker service update --image savannahostrowski/savannah.dev:latest arrakis_savannahdev`
