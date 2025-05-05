@@ -1,17 +1,18 @@
 baseURL: https://savannahostrowski.com/
 languageCode: en-us
-title: Savannah Ostrowski
+title: Savannah Bailey
 theme: github.com/adityatelange/hugo-PaperMod
 
 params:
   env: production
   description: >
-      I'm a Staff Product Manager at Docker.
+      Python Core Developer
 
   homeInfoParams:
     title: "Hey👋! I'm Savannah."
+    subtitle: "née Savannah Ostrowski"
     description: >
-      I'm a Staff Product Manager at Docker.
+      Python Core Developer
 
   socialIcons:
     - name: github

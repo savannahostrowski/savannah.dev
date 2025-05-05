@@ -2,6 +2,9 @@
 <article class="first-entry home-info">
     <header class="entry-header">
         <h1>{{ .Title | markdownify }}</h1>
+        <h4 class="entry-header">
+            {{ .Subtitle | markdownify }}
+        </h4>
         <hr class="line-divider">
     </header>
     <div class="entry-content">
@@ -9,7 +12,8 @@
             I'm a <a href="https://github.com/python/cpython" class="body-link" target="_blank">Python</a> Core Developer,
             focused on maintaining <a href="https://peps.python.org/pep-0744/" class="body-link" target="_blank">the JIT</a> and
             argparse. I also work at <a href="https://www.snowflake.com" class="body-link"
-            target="_blank">Snowflake</a> on Python developer experience and Notebooks.
+            target="_blank">Snowflake</a> on Python developer experience and Notebooks. I'm also part of the Faster CPython team and 
+            a Jupyter Foundation Governing Board member on behalf of Snowflake.
         </p>
         <p>
             I previously worked at: Docker (<a href="https://github.com/moby/moby" class="body-link"
