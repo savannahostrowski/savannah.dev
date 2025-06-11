@@ -1,7 +1,19 @@
-baseURL: https://savannahostrowski.com/
+baseURL: https://savannah.dev/
 languageCode: en-us
 title: Savannah Bailey
 theme: github.com/adityatelange/hugo-PaperMod
+
+menu:
+  main:
+  - name: Home
+    url: /
+    weight: 5
+  - name: Archives
+    url: /archives
+    weight: 10
+  - name: Playground
+    url: https://playground.savannah.dev
+    weight: 15
 
 params:
   env: production
@@ -14,6 +26,7 @@ params:
     description: >
       Python Core Developer
 
+
   socialIcons:
     - name: github
       url: 'https://github.com/savannahostrowski'
@@ -21,8 +34,6 @@ params:
       url: 'https://bsky.app/profile/savannah.dev'
     - name: linkedin
       url: 'https://linkedin.com/in/savannahostrowski'
-    - name: youtube
-      url: 'https://youtube.com/playlist?list=PLq8oMtzrBmrgGXsW1theGfIwDu8ShD5hp&si=v49B7de8avnd-Rvx'
 
   showReadingTime: true
   showPostNavLinks: true
@@ -32,18 +43,8 @@ params:
   showWordCount: true
   showToc: true
 
-
   schema:
     publisherType: Person
-
-menu:
-  main:
-    - name: About
-      url: /
-      weight: 5
-    - name: Archive
-      url: /archives
-      weight: 10
 
 outputs:
   home:
