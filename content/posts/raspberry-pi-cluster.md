@@ -3,6 +3,7 @@ title: "Self-hosting on a Raspberry Pi cluster"
 date: "2024-04-06T12:13:43-07:00"
 summary: "Moving all my personal websites to a Raspberry Pi cluster sitting in my home office"
 description: "Moving all my personal websites to a Raspberry Pi cluster sitting in my home office"
+tags: ["Physical Computing", "Raspberry Pi", "Docker", "Self-hosting", "Hacking"]
 ---
 
 This post is an overview of how I went off the grid – or, in other words, moved all my personal websites off Azure and onto a Raspberry Pi cluster sitting in my home office. This isn't exactly a tutorial blog post, but feel free to use this as a reference. 

@@ -22,7 +22,7 @@
 .hljs-number,
 .hljs-params,
 .hljs-type {
-    color: #e7ce56;
+    color: #e67e22; /* Changed from yellow (#d4b930) to orange */
 }
 
 .hljs-attribute {
@@ -33,12 +33,12 @@
 .hljs-bullet,
 .hljs-string,
 .hljs-symbol {
-    color: #4fb4d7;
+    color: #2d8cb8; /* Darker blue (was #4fb4d7) */
 }
 
 .hljs-section,
 .hljs-title {
-    color: #78bb65;
+    color: #539c41; /* Darker green (was #78bb65) */
 }
 
 .hljs-keyword,

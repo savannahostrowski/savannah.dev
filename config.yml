@@ -3,28 +3,35 @@ languageCode: en-us
 title: Savannah Bailey
 theme: github.com/adityatelange/hugo-PaperMod
 
+# Add this line to use about.md as the home page
+paginate: 5
+frontmatter:
+  home: ["/about"]
+
 menu:
   main:
   - name: Home
     url: /
-    weight: 5
-  - name: Archives
-    url: /archives
-    weight: 10
+    weight: 1
+  - name: About
+    url: /about
+    weight: 2
+  - name: Blog
+    url: /blog
+    weight: 3
   - name: Playground
     url: https://playground.savannah.dev
-    weight: 15
+    weight: 4
 
 params:
   env: production
-  description: >
-      Python Core Developer
+  description: I'm the release manager for Python 3.16 & 3.17 and a CPython core developer. I also work at Snowflake on Python developer experience.
+
 
   homeInfoParams:
     title: "Hey👋! I'm Savannah."
     subtitle: "née Savannah Ostrowski"
-    description: >
-      Python Core Developer
+    description: I'm the release manager for Python 3.16 & 3.17 and a CPython core developer. I also work at Snowflake on Python developer experience.
 
 
   socialIcons:

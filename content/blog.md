@@ -1,5 +1,5 @@
 ---
-title: Archive
+title: Blog
 layout: archives
 summary: archives
 ---
