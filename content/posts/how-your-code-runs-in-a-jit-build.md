@@ -216,7 +216,7 @@ For all intents and purposes, your code is now running in the Python interpreter
 ### But, wait, there's more: The Specializing Adaptive Interpreter
 
 Since Python 3.11, we've had something called the [Specializing Adaptive Interpreter](https://peps.python.org/pep-0659/) in CPython (a significant contributor to why
-Python 3.11 was about 25% faster than Python 3.10 for most workloads). We won't get into this too deep in this blog post but in essence, the idea here is that once a bytecode instruction has been executed enough times, the interpreter can "specialize" it based on types and values seen at runtime. 
+Python 3.11 was about 25% faster than Python 3.10 for most workloads). We won't get into this too deep in this blog post but in essence, the idea here is that once a bytecode instruction has been executed enough times in a code path, the interpreter can "specialize" it based on types and values seen at runtime. 
 
 For example, let's consider the `BINARY_OP` instruction in our bytecode above. If the interpreter sees you're doing a lot of integer subtraction, it might opt to replace it with the specialized instruction that only handles integer subtraction, `BINARY_OP_SUBTRACT_INT`. This means that the interpreter can skip type checks and other overhead associated with more generic operations, making it faster even without the JIT compiler.
 
@@ -228,10 +228,9 @@ Right, right. Okay, so now that we understand how the interpreter works, we can 
 
 So, your code is running in a regular build of CPython is already doing some smart things to optimize your bytecode. But what if we could do even better? What if we could take those bytecode instructions and turn them into something even more efficient? This is where the micro-instruction interpreter comes in.
 
-So once your code has "warmed up" or been executed enough times, we can start to optimize it further. What's really neat is that the specializing adaptive interpreter actually provides us with a lot of profiling information about the code being executed. With the micro-op interpreter, we actually break each bytecode instruction in the code path down into even smaller, more specialized instructions called micro-operations, or uops. These uops are designed to be more efficient and can be executed much faster than the original bytecode instructions. The process of breaking down bytecode instructions into traces happens automatically thanks to some domain-specific language (DSL) infrastructure that was introduced in Python 3.12; it's effectively a table look up to say that this bytecode instruction maps to these uops. Once we have these uops, we can even start to optimize them further by removing unnecessary checks and operations (...again, a topic for another post). 
+So once your code has "warmed up" or been executed enough times, we can start to optimize it even further. What's really neat is that the specializing adaptive interpreter actually provides us with a lot of profiling information about the code being executed that helps with all of this. With the micro-op interpreter, we breaks each bytecode instruction in the code path down into even smaller, more specialized instructions called micro-operations, or uops. These uops are designed to be more efficient and can be executed much faster than the original bytecode instructions. The process of breaking down bytecode instructions into traces happens automatically thanks to some domain-specific language (DSL) infrastructure that was introduced in Python 3.12; it's effectively a table look up to say that this bytecode instruction maps to these uops. Once we have these uops, we can even start to optimize them further by removing unnecessary checks and operations (...again, a topic for another post). 
 
 ...I'd be remiss if I didn’t mention that the micro-op interpreter is a separate interpreter from the regular bytecode one. In a JIT build of CPython, both interpreters are available, and once a function becomes "hot," execution can switch from bytecode to uops. That might sound like a big performance win—but not quite yet. In fact, things often get slower at this stage. The micro-op interpreter introduces overhead by breaking each bytecode instruction into smaller, more granular uops and dispatching more instructions overall. It’s a trade-off: we’re doing extra work now to prepare for the real speedup that comes next—when the JIT compiler steps in to generate optimized machine code and (hopefully) recover that lost performance and then some.
-
 
 > When you build Python with `--enable-experimental-jit` or set `PYTHON_JIT=1` in Python 3.14 builds, you're not just enabling the JIT itself, but the micro-op interpreter as well.
 
@@ -239,16 +238,22 @@ So once your code has "warmed up" or been executed enough times, we can start to
 
 Alright, we've finally made it! Let's talk about the JIT.
 
-CPython's JIT compiler takes these micro-op traces and compiles them into native machine code using a technique called copy-and-patch. With copy-and-patch, the JIT compiler generates machine code based on precompiled stencil templates. These templates are like blueprints for how to translate uops into machine code. They contain the general structure of the machine code needed for each uop, with placeholders for specific values that will be filled in at runtime.
+First off, let's talk about what a JIT compiler is, in case you're not already familiar. A JIT (Just-In-Time) compiler is a type of compiler that translates code into machine code at runtime, rather than before execution. 
 
-So, more practically speaking, when Python is built with the JIT enabled, we use the LLVM toolchain to generate stencil files for your specific platform and architecture. These files contain machine code templates for each uop. At runtime, the JIT compiler uses these templates to generate native code tailored to the execution context, without needing to generate machine code from scratch.
+In the context of CPython, our JIT compiler uses a technique called copy-and-patch. This technique is covered in [this paper](https://fredrikbk.com/publications/copy-and-patch.pdf) but don't worry, we don't need to get too academic here. Basically, what happens is as follows:
 
-When the JIT compiler detects a hot trace, it takes the relevant uops and uses the precompiled stencil templates to generate the native machine code. It fills in the placeholders with the actual values needed for your code, such as the addresses of variables, constants, and cached results. This allows the JIT compiler to produce optimized machine code that is tailored to the specific execution context of your code and can be executed directly by the CPU.
+1. When CPython is built, we use LLVM to generate precompiled stencil files for your specific platform and architecture. These stencil files contain templates for how to translate the micro-ops we talked about earlier into machine code.
+2. When your code is executed, the JIT compiler monitors the execution and identifies "hot" traces—sections of code that are executed frequently.
+3. When a hot trace is detected, the JIT compiler takes the relevant micro-ops, which are the smaller, specialized instructions we covered earlier, and uses the precompiled stencil templates to generate native machine code.
+4. The JIT compiler fills in the placeholders in the stencil templates with the actual values needed for your code, such as addresses of variables, constants, and cached results ("patching" up the code).
+5. These stencil files are then linked together to form a trace, which is a sequence of micro-ops that can be executed as native machine code.
+6. Finally, the JIT compiler executes this native machine code directly instead of interpreting.
 
 > Now, the elephant in the room here is that the JIT does not (yet!) make Python a whole lot faster. In most cases, the JIT builds range from slower to about the same performance as the non-JIT build of Python. As of 3.14, the JIT is faster in select benchmarks but we have a ways to go still. Ken Jin has a great [blog post](https://fidget-spinner.github.io/posts/jit-reflections.html) that goes into more detail about the performance of the JIT builds in Python 3.14 (among other reflections) if you're interested.
 
 
 ## Putting it all together
+
 So, to summarize, when you run your code in a JIT build of CPython, the following happens:
 1. Your code is tokenized, parsed, and compiled into bytecode as usual.
 2. The bytecode is executed by the regular bytecode interpreter, which may specialize some instructions based on runtime profiling.
@@ -259,6 +264,7 @@ So, to summarize, when you run your code in a JIT build of CPython, the followin
 ...and that's it! You now have an understanding of how your code runs in a JIT build of CPython and you didn't have to be a compiler engineer to understand it!
 
 ## Suggested readings & videos
+
 Some other great talks, blog posts, etc. by other folks working on Python:
 - Maybe watch one of Brandt's talks on this topic: 
     - [Building a JIT compiler for CPython](https://www.youtube.com/watch?v=kMO3Ju0QCDo)
