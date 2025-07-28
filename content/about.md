@@ -14,7 +14,7 @@ This work is mostly upcoming but I'm excited to be the [10th ever Python release
 
 **I'm a CPython core developer**
 
-I was [promoted to core developer](https://discuss.python.org/t/vote-to-promote-savannah-ostrowski/) in November 2024 after serving on the triage team for a little under a year. I current work on both older and newer parts of the codebase, in Python and in C. Mostly notably, I help maintain the argparse module, the JIT compiler introduced as experimental in Python 3.13...and whatever else needs help. As part of my work on the JIT, I also work on the specializing adaptive interpreter and tier 2 interpreter (micro-op interpreter), and am part of a team of folks working on making Python faster.
+I was [promoted to core developer](https://discuss.python.org/t/vote-to-promote-savannah-ostrowski/) in November 2024 after serving on the triage team for a little under a year. I current work on both older and newer parts of the codebase, in Python and in C. Mostly notably, I help maintain the argparse module, the JIT compiler introduced as experimental in Python 3.13...and whatever else needs help. I'm having a lot of fun working with other contributors to make Python faster.
 
 **I'm a PEP author**
 
@@ -29,7 +29,8 @@ Alongside my role as a board member, I was elected to help manage the Jupyter Fo
 I joined Snowflake in 2024 to lead Python developer experience. My focus is on making Snowflake the best platform for all things data in Python, from data engineering to data science and machine learning. I support teams across the company building Python tools, but these days, I’m primarily focused on the backend of our Notebooks product: Python runtimes, package management, kernels, compute infrastructure, and more.
 
 ## Fun facts and other non-tech stuff
-- I'm an amateur ceramicist and spend a least a couple hours a week in the studio throwing. I even donated some pieces to the PyLadies auction at PyCon US 2025 (and plan to do so again next year).
+
+- I'm an amateur ceramicist and spend a least a couple hours a week in the studio throwing clay on the wheel. I even donated some pieces to the PyLadies Auction at PyCon US 2025 (and plan to do so again next year).
 - I have three cats named after Japanese foods: [Nori, Miso, and Momo](https://github.com/savannahostrowski/savannahostrowski/blob/main/cats.jpg). They are the lights of my life.
 - I'm Canadian, but have been living in the US since 2016. I currently live in the Seattle, Washington area.
 - I <3 Charli xcx. My favourite song is [Track 10](https://open.spotify.com/track/4t9PBD27dndlf6YMBK2ROc?si=9cfb3241e68c490d) from the [Pop 2](https://open.spotify.com/album/2HIwUmdxEl7SeWa1ndH5wC?si=WDkYy6bLQgeaqAGS3WP9wg) mixtape. I also walked down the aisle at my wedding to [party 4 u](https://open.spotify.com/track/2RdEC8Ff83WkX7kDVCHseE?si=affa043ef7474774). If you want to more music recommendations, you can check out my [Spotify](https://open.spotify.com/user/224tlpa3nu7dkd5srtvkvicfi?si=d23e7458f50e4f30). 

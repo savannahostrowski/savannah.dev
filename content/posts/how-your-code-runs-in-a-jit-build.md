@@ -1,12 +1,14 @@
 ---
-title: "JIT Builds of CPython"
-date: "2025-07-26"
-summary: "You don't have to be a compiler engineer to understand...how your code runs in a JIT build of CPython."
-description: "You don't have to be a compiler engineer to understand..."
+title: "How JIT builds of CPython actually work"
+date: "2025-07-27"
+summary: "You don't have to be a compiler engineer to understand how your code runs in a JIT build of CPython."
+description: "You don't have to be a compiler engineer to understand how your code runs in a JIT build of CPython."
 tags: ["Python", "JIT", "CPython"]
 ---
 
->  This post is the first in a planned series around CPython internals. The goal here is to make complex topics related to CPython feel more approachable. If I missed something or you’d like to request a topic, feel free to drop me a line at my [email](mailto:savannah@python.org).
+>  This post is the first in a planned series around CPython internals. The goal here is to make complex topics related to CPython feel more approachable. If I missed something or you’d like to request a topic, feel free to drop me a line via [email](mailto:savannah@python.org).
+
+Ever wonder what really happens under the hood when you run your Python code? If you're using a JIT build of CPython, the answer may involve a few more steps than you'd expect but thankfully, you don't have to be a compiler engineer to understand it. 
 
 Before I get into it, I want to shamelessly plug that you can help us test JIT builds of CPython pretty easily as of Python 3.14! You can now get official Python builds from [python.org](https://www.python.org/downloads/) for both Windows and macOS that include [CPython’s experimental just-in-time (JIT) compiler built in but off by default](https://docs.python.org/3.14/whatsnew/3.14.html#binary-releases-for-the-experimental-just-in-time-compiler). While the JIT builds are not (yet) recommended for production use, you can enable the JIT using the `PYTHON_JIT=1` environment variable. We’d love to hear about your experience using Python with the JIT - the good, the bad, the ugly!
 
@@ -14,7 +16,7 @@ Alright, let's get after it.
 
 ## What happens when you execute your code: A brief overview of CPython’s interpreter
 
-...well, before we get into what happens in a JIT build of Python, we should probably briefly talk about what happens in a "regular" build for anyone that isn't familiar with how the interpreter works, as this lays the foundation for the JIT builds later on. I think the best way to talk about this is by example. To cover this, let’s consider this very basic function:
+...Well, before we get into what happens in a JIT build of Python, we should probably briefly talk about what happens in a "regular" build for anyone that isn't familiar with how the interpreter works, as this lays the foundation for the JIT builds later on. I think the best way to talk about this is by example. To cover this, let’s consider this very basic function:
 
 ```python
 def my_cool_function(a: int, b: int) -> int:
@@ -22,12 +24,79 @@ def my_cool_function(a: int, b: int) -> int:
         return a - b
     return b - a
 ```
+So, let's say you execute this with your local version of Python and boom, the code is running. But what actually happens here?
 
-You execute this with your local version of Python and boom, the code is running. But what actually happens here?
+### First, your code is broken down into tokens
 
-### First, we parse
+When you run this code, the first thing that happens is that Python breaks it down into tokens. Tokens are the smallest units of meaning in your code, like keywords, identifiers, literals, and operators. For example, in our function, `def`, `my_cool_function`, `(`, `a`, `b`, `if`, `>`, `return`, and so on are all tokens. This process is known as lexical analysis or tokenization.
+You can see what the tokens for our function look like using the `tokenize` module in the standard library. Here’s how you can do that:
 
-Well, first, your code is turned into something called an abstract syntax tree (AST), which is a tree-based representation of the structure of your code. We can see what our simple function above's AST would look like using the `ast` module in the standard library. The code looks something like this:
+```python
+import tokenize
+from io import BytesIO
+source = b"""
+def my_cool_function(a: int, b: int) -> int:
+    if a > b:
+        return a - b
+    return b - a
+"""
+tokens = tokenize.tokenize(BytesIO(source).readline)
+for token in tokens:
+    print(token)
+```
+
+This will output a list of tokens that look something like this:
+
+```plaintext
+TokenInfo(type=65 (ENCODING), string='utf-8', start=(0, 0), end=(0, 0), line='')
+TokenInfo(type=63 (NL), string='\n', start=(1, 0), end=(1, 1), line='\n')
+TokenInfo(type=1 (NAME), string='def', start=(2, 0), end=(2, 3), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='my_cool_function', start=(2, 4), end=(2, 20), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string='(', start=(2, 20), end=(2, 21), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='a', start=(2, 21), end=(2, 22), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=':', start=(2, 22), end=(2, 23), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='int', start=(2, 24), end=(2, 27), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=',', start=(2, 27), end=(2, 28), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='b', start=(2, 29), end=(2, 30), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=':', start=(2, 30), end=(2, 31), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='int', start=(2, 32), end=(2, 35), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=')', start=(2, 35), end=(2, 36), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string='->', start=(2, 37), end=(2, 39), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='int', start=(2, 40), end=(2, 43), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=':', start=(2, 43), end=(2, 44), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=4 (NEWLINE), string='\n', start=(2, 44), end=(2, 45), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=5 (INDENT), string='    ', start=(3, 0), end=(3, 4), line='    if a > b:\n')
+TokenInfo(type=1 (NAME), string='if', start=(3, 4), end=(3, 6), line='    if a > b:\n')
+TokenInfo(type=1 (NAME), string='a', start=(3, 7), end=(3, 8), line='    if a > b:\n')
+TokenInfo(type=55 (OP), string='>', start=(3, 9), end=(3, 10), line='    if a > b:\n')
+TokenInfo(type=1 (NAME), string='b', start=(3, 11), end=(3, 12), line='    if a > b:\n')
+TokenInfo(type=55 (OP), string=':', start=(3, 12), end=(3, 13), line='    if a > b:\n')
+TokenInfo(type=4 (NEWLINE), string='\n', start=(3, 13), end=(3, 14), line='    if a > b:\n')
+TokenInfo(type=5 (INDENT), string='        ', start=(4, 0), end=(4, 8), line='        return a - b\n')
+TokenInfo(type=1 (NAME), string='return', start=(4, 8), end=(4, 14), line='        return a - b\n')
+TokenInfo(type=1 (NAME), string='a', start=(4, 15), end=(4, 16), line='        return a - b\n')
+TokenInfo(type=55 (OP), string='-', start=(4, 17), end=(4, 18), line='        return a - b\n')
+TokenInfo(type=1 (NAME), string='b', start=(4, 19), end=(4, 20), line='        return a - b\n')
+TokenInfo(type=4 (NEWLINE), string='\n', start=(4, 20), end=(4, 21), line='        return a - b\n')
+TokenInfo(type=6 (DEDENT), string='', start=(5, 4), end=(5, 4), line='    return b - a\n')
+TokenInfo(type=1 (NAME), string='return', start=(5, 4), end=(5, 10), line='    return b - a\n')
+TokenInfo(type=1 (NAME), string='b', start=(5, 11), end=(5, 12), line='    return b - a\n')
+TokenInfo(type=55 (OP), string='-', start=(5, 13), end=(5, 14), line='    return b - a\n')
+TokenInfo(type=1 (NAME), string='a', start=(5, 15), end=(5, 16), line='    return b - a\n')
+TokenInfo(type=4 (NEWLINE), string='\n', start=(5, 16), end=(5, 17), line='    return b - a\n')
+TokenInfo(type=6 (DEDENT), string='', start=(6, 0), end=(6, 0), line='')
+TokenInfo(type=0 (ENDMARKER), string='', start=(6, 0), end=(6, 0), line='')
+```
+
+Yeah, that's...a lot but don't worry, you don't have to memorize it or anything. The key takeaway here is that Python has broken down your code into its smallest meaningful parts, which will be used in the next steps of execution.
+
+### Next, your code is parsed
+
+Next, these tokens are combined to form a structure called an abstract syntax tree (AST), which is a tree-based representation of the structure of your code. The AST captures the hierarchical structure of your code, showing how different parts relate to each other. For example, in our function, the AST would show that `my_cool_function` is a function definition, `a` and `b` are parameters, and the `if` statement is a conditional that leads to different return statements.
+
+It's also at this stage that Python checks for syntax errors. If there are any, it raises a `SyntaxError` and stops execution.
+
+We can see what our simple function above's AST would look like using the `ast` module in the standard library. The code looks something like this:
 
 ```python
 import ast
@@ -88,7 +157,7 @@ Module(
                     Constant(value=3)]))])
 ```
 
-This is a lot of information for such a short function but what you should really glean from this is that every variable, statement, function, constant, etc. along with its relationship is represented in this tree.
+Again, this is a lot of information for such a short function but what you should really glean from this is that every variable, statement, function, constant, etc. along with its relationship is represented in this tree.
 
 ### Then, we compile to bytecode
 
@@ -122,76 +191,78 @@ dis.dis(my_cool_function)
               RETURN_VALUE
 ```
 
-This might look intimidating, but it's just a lower-level form of your original code. Here's a quick mapping:
+This might look intimidating, but it's just a lower-level form of your original code. Here's a quick mapping, removing some instructions for brevity:
 
-<table data-start="1136" data-end="1638" class="w-fit min-w-(--thread-content-width)"><thead data-start="1136" data-end="1206"><tr data-start="1136" data-end="1206"><th data-start="1136" data-end="1179" data-col-size="sm">Bytecode instruction</th><th data-start="1179" data-end="1206" data-col-size="sm">Original code</th></tr></thead><tbody data-start="1279" data-end="1638"><tr data-start="1279" data-end="1350"><td data-start="1279" data-end="1322" data-col-size="sm"><code data-start="1281" data-end="1322">LOAD_FAST_BORROW_LOAD_FAST_BORROW (a,b)</code></td><td data-col-size="sm" data-start="1322" data-end="1350"><code data-start="1324" data-end="1331">a &gt; b</code> or <code data-start="1335" data-end="1342">a - b</code></td></tr><tr data-start="1351" data-end="1422"><td data-start="1351" data-end="1394" data-col-size="sm"><code data-start="1353" data-end="1379">COMPARE_OP 148 (bool(&gt;))</code></td><td data-col-size="sm" data-start="1394" data-end="1422"><code data-start="1396" data-end="1403">a &gt; b</code></td></tr><tr data-start="1423" data-end="1494"><td data-start="1423" data-end="1466" data-col-size="sm"><code data-start="1425" data-end="1444">POP_JUMP_IF_FALSE</code></td><td data-col-size="sm" data-start="1466" data-end="1494"><code data-start="1468" data-end="1479">if a &gt; b:</code></td></tr><tr data-start="1495" data-end="1566"><td data-start="1495" data-end="1538" data-col-size="sm"><code data-start="1497" data-end="1515">BINARY_OP 10 (-)</code></td><td data-col-size="sm" data-start="1538" data-end="1566"><code data-start="1540" data-end="1547">a - b</code> or <code data-start="1551" data-end="1558">b - a</code></td></tr><tr data-start="1567" data-end="1638"><td data-start="1567" data-end="1610" data-col-size="sm"><code data-start="1569" data-end="1583">RETURN_VALUE</code></td><td data-col-size="sm" data-start="1610" data-end="1638"><code data-start="1612" data-end="1624">return ...</code></td></tr></tbody></table>
+| Bytecode Instruction                                           | Original Code     | Explanation                                                 |
+|---------------------------------------------------------------|-------------------|--------------------------------------------------------------|
+| `LOAD_FAST_BORROW_LOAD_FAST_BORROW 1 (a, b)`                  | `a > b`           | Load `a` and load `b`                                        |
+| `COMPARE_OP 148 (bool(>))`                                    | `a > b`           | Compare `a` and `b` using the `>` operator                   |
+| `POP_JUMP_IF_FALSE 9 (to L1)`                                 | `if a > b:`       | Jump to else clause if condition is false                    |
+| `LOAD_FAST_BORROW_LOAD_FAST_BORROW 1 (a, b)`                  | `return a - b`    | Load `a` and  load `b` again for subtraction                 |
+| `BINARY_OP 10 (-)`                                            | `a - b`           | Subtract `b` from `a`                                        |
+| `RETURN_VALUE`                                                | `return a - b`    | Return the result of the subtraction                         |
+| `LOAD_FAST_BORROW_LOAD_FAST_BORROW 16 (b, a)` (at label `L1`) | `return b - a`    | Load `b` and load `a` for the else clause                    |
+| `BINARY_OP 10 (-)`                                            | `b - a`           | Subtract `a` from `b`                                        |
+| `RETURN_VALUE`                                                | `return b - a`    | Return the result of the subtraction                         |
 
-This shows how Python breaks your logic into a series of simple instructions — each one executed by the Python Virtual Machine (PVM). The instructions here are minimal but powerful: they handle loading variables, performing comparisons, jumps, arithmetic, and returning values. The PVM pops these instructions off a stack and executes them one by one, maintaining the state of your program as it goes.
+This shows how Python breaks your logic into a series of simple instructions. Each instruction is a single operation that the interpreter can execute. For example, `LOAD_FAST_BORROW_LOAD_FAST_BORROW` loads the values of `a` and `b`, `COMPARE_OP` compares them, and `BINARY_OP` performs the subtraction. 
 
-And that's it! Your code is now running in the Python interpreter, executing these bytecode instructions one by one.
+CPython runs your code using a bytecode interpreter. It uses an internal evaluation loop, which executes one bytecode instruction at a time, dispatching to the appropriate C function that handles it. This loop also manages the Python Virtual Machine (PVM), which maintains the call stack, handles memory management, exception handling, and more.
 
-### But, wait, there's more!
+There's more to say here about the Global Interpreter Lock, garbage collection, etc. but I'm going to save that for another post. The key takeaway here is that the PVM executes these bytecode instructions in a loop, processing each instruction in sequence until it reaches the end of the function or encounters a return statement.
 
-Since Python 3.11, we've had something called the [Specializing Adaptive Interpreter](https://peps.python.org/pep-0659/) in CPython. We won't get into this too deep in this blog post but in essence, this interpreter adds a layer to the regular interpreter which tries to look for common patterns and stable types in the code being executed and try to replace operations (aka the bytecode instruction(s)) with more specialized instructions.
+For all intents and purposes, your code is now running in the Python interpreter. This is how Python executes your code in a regular build of CPython.
 
-For example, we could consider the `BINARY_OP` instruction in our bytecode. In the context of our function, this instruction is used to perform subtraction. In a regular build, it might be a generic operation that can handle any type of operands (like integers, floats, etc.). In a specialized build, this instruction could be replaced with a more specific one that only handles integer subtraction (assuming the operands are always integers) with `BINARY_OP_SUB_INT`, which would be faster because it skips type checks and other overhead associated with more generic operations.
+### But, wait, there's more: The Specializing Adaptive Interpreter
 
-The earlier parsing and compilation plus this specialization makes up what we call the **Tier 1 interpreter**. This is the first layer of optimization that Python applies to your code, and it’s what you get in a regular build of CPython.
+Since Python 3.11, we've had something called the [Specializing Adaptive Interpreter](https://peps.python.org/pep-0659/) in CPython (a significant contributor to why
+Python 3.11 was about 25% faster than Python 3.10 for most workloads). We won't get into this too deep in this blog post but in essence, the idea here is that once a bytecode instruction has been executed enough times, the interpreter can "specialize" it based on types and values seen at runtime. 
 
+For example, let's consider the `BINARY_OP` instruction in our bytecode above. If the interpreter sees you're doing a lot of integer subtraction, it might opt to replace it with the specialized instruction that only handles integer subtraction, `BINARY_OP_SUBTRACT_INT`. This means that the interpreter can skip type checks and other overhead associated with more generic operations, making it faster even without the JIT compiler.
 
 ## Okay, so what happens in JIT builds?
 
 Right, right. Okay, so now that we understand how the interpreter works, we can talk about what happens when you run your code in a JIT build of CPython.
 
-### Enter the Tier 2 interpreter: Micro-instruction (uops) interpreter
+### Enter the micro-instruction (uops) interpreter
 
-So, your code is running in the Tier 1 interpreter, which is already doing some smart things to optimize your bytecode. But what if we could do even better? What if we could take those bytecode instructions and turn them into something even more efficient? That’s where the Tier 2 interpreter comes in.
+So, your code is running in a regular build of CPython is already doing some smart things to optimize your bytecode. But what if we could do even better? What if we could take those bytecode instructions and turn them into something even more efficient? This is where the micro-instruction interpreter comes in.
 
-The Tier 2 interpreter is a new layer that sits on top of the Tier 1 interpreter. It takes the specialized bytecode instructions and translates them into something called micro-operations, or uops. These are simpler, lower-level instructions that are easier to optimize and closer to machine code. These uops are like the building blocks of your code, and they can be executed much faster than the original bytecode instructions.
+So once your code has "warmed up" or been executed enough times, we can start to optimize it further. What's really neat is that the specializing adaptive interpreter actually provides us with a lot of profiling information about the code being executed. With the micro-op interpreter, we actually break each bytecode instruction in the code path down into even smaller, more specialized instructions called micro-operations, or uops. These uops are designed to be more efficient and can be executed much faster than the original bytecode instructions. The process of breaking down bytecode instructions into traces happens automatically thanks to some domain-specific language (DSL) infrastructure that was introduced in Python 3.12; it's effectively a table look up to say that this bytecode instruction maps to these uops. Once we have these uops, we can even start to optimize them further by removing unnecessary checks and operations (...again, a topic for another post). 
 
-Here’s how it works:
-1. When your code is running in the Tier 1 interpreter, it keeps track of which bytecode instructions are being executed frequently. These are called "hot" instructions.
-2. When a hot instruction is detected, the Tier 2 interpreter kicks in. It takes the bytecode instruction and translates it into a series of uops. These uops are designed to be more efficient and can be executed much faster than the original bytecode.
-3. The Tier 2 interpreter then executes these uops instead of the original bytecode instruction. This means that your code can run much faster, especially for those hot paths that are executed frequently.
+...I'd be remiss if I didn’t mention that the micro-op interpreter is a separate interpreter from the regular bytecode one. In a JIT build of CPython, both interpreters are available, and once a function becomes "hot," execution can switch from bytecode to uops. That might sound like a big performance win—but not quite yet. In fact, things often get slower at this stage. The micro-op interpreter introduces overhead by breaking each bytecode instruction into smaller, more granular uops and dispatching more instructions overall. It’s a trade-off: we’re doing extra work now to prepare for the real speedup that comes next—when the JIT compiler steps in to generate optimized machine code and (hopefully) recover that lost performance and then some.
 
-When you build Python with `--enable-experimental-jit`, you're enabling not just the JIT itself, but this entire Tier 2 machinery. 
 
-### JIT Compilation: From uops to native machine code
+> When you build Python with `--enable-experimental-jit` or set `PYTHON_JIT=1` in Python 3.14 builds, you're not just enabling the JIT itself, but the micro-op interpreter as well.
 
-Now that we have these uops, we can take it a step further. The JIT compiler in CPython takes these uops and compiles them into native machine code. This is where the real magic happens.
+### JIT Compilation
 
-When your code runs in a JIT build of CPython, the JIT compiler does the following:
-1. It monitors the execution of your code and identifies "hot" traces—sequences of uops that are executed frequently.
-2. When a trace becomes hot enough, the JIT compiler kicks in. It takes the uops from that trace and compiles them into native machine code.
-3. This native machine code is then executed directly by the CPU, bypassing the interpreter entirely. This means that your code can run at near-native speeds, significantly improving performance for those hot paths.
-4. The JIT compiler uses precompiled stencil templates to generate this native code, which allows it to quickly patch in the specific values and addresses needed for your code.
-This is a key part of the JIT compilation process. It allows Python to generate optimized machine code on the fly, tailored to the specific execution context of your code. This means that the JIT compiler can take advantage of the specific types and values used in your code, resulting in even better performance.
+Alright, we've finally made it! Let's talk about the JIT.
 
-### How does the JIT compiler use precompiled stencil templates?
-The JIT compiler uses precompiled stencil templates to generate native machine code quickly and efficiently. These templates are like blueprints for how to translate uops into machine code. They contain the general structure of the machine code needed for each uop, with placeholders for specific values that will be filled in at runtime.
+CPython's JIT compiler takes these micro-op traces and compiles them into native machine code using a technique called copy-and-patch. With copy-and-patch, the JIT compiler generates machine code based on precompiled stencil templates. These templates are like blueprints for how to translate uops into machine code. They contain the general structure of the machine code needed for each uop, with placeholders for specific values that will be filled in at runtime.
+
+So, more practically speaking, when Python is built with the JIT enabled, we use the LLVM toolchain to generate stencil files for your specific platform and architecture. These files contain machine code templates for each uop. At runtime, the JIT compiler uses these templates to generate native code tailored to the execution context, without needing to generate machine code from scratch.
 
 When the JIT compiler detects a hot trace, it takes the relevant uops and uses the precompiled stencil templates to generate the native machine code. It fills in the placeholders with the actual values needed for your code, such as the addresses of variables, constants, and cached results. This allows the JIT compiler to produce optimized machine code that is tailored to the specific execution context of your code and can be executed directly by the CPU.
 
-This process is efficient because it avoids the overhead of generating machine code from scratch every time a hot trace is detected. Instead, it reuses the precompiled templates, which have already been optimized for performance. This means that the JIT compiler can quickly generate native machine code that is ready to run, without the need for extensive compilation time.  
+> Now, the elephant in the room here is that the JIT does not (yet!) make Python a whole lot faster. In most cases, the JIT builds range from slower to about the same performance as the non-JIT build of Python. As of 3.14, the JIT is faster in select benchmarks but we have a ways to go still. Ken Jin has a great [blog post](https://fidget-spinner.github.io/posts/jit-reflections.html) that goes into more detail about the performance of the JIT builds in Python 3.14 (among other reflections) if you're interested.
 
-This is a key part of the JIT compilation process. It allows Python to generate optimized machine code on the fly, tailored to the specific execution context of your code. This means that the JIT compiler can take advantage of the specific types and values used in your code, resulting in even better performance.
 
 ## Putting it all together
 So, to summarize, when you run your code in a JIT build of CPython, the following happens:
-1. Your code is parsed into an AST.
-2. The AST is compiled into bytecode.
-3. The bytecode is executed by the Tier 1 interpreter, which may specialize some operations.
-4. The Tier 2 interpreter monitors the execution and identifies hot bytecode instructions.
-5. When a hot instruction is detected, the Tier 2 interpreter translates it into uops.
-6. The JIT compiler compiles these uops into native machine code using precompiled stencil templates.
-7. The native machine code is executed directly by the CPU, bypassing the interpreter.
+1. Your code is tokenized, parsed, and compiled into bytecode as usual.
+2. The bytecode is executed by the regular bytecode interpreter, which may specialize some instructions based on runtime profiling.
+3. If the code is executed enough times, the micro-op interpreter kicks in, breaking down the bytecode instructions into smaller, more specialized uops.
+4. The JIT compiler then compiles these uops into native machine code using precompiled stencil templates, optimizing the execution of your code.
+5. The native machine code is executed directly by the CPU, bypassing the bytecode interpreter and micro-op interpreter.
 
-This process allows Python to run your code much faster than in a regular build, especially for those hot paths that are executed frequently. The JIT compiler can optimize the execution of your code on the fly, resulting in hopefully[^performance] significant performance improvements.
-
-[^performance]: Note that the performance improvements will vary depending on the specific code being executed and the workload. Not all code will benefit equally from JIT compilation, but for many workloads, the performance gains can be substantial. A topic for another post!
+...and that's it! You now have an understanding of how your code runs in a JIT build of CPython and you didn't have to be a compiler engineer to understand it!
 
 ## Suggested readings & videos
 Some other great talks, blog posts, etc. by other folks working on Python:
-- Maybe watch one of Brandt's talks on this topic: here, here, or here
-- ...Or maybe Diego's excellent talk from EuroPython this year
+- Maybe watch one of Brandt's talks on this topic: 
+    - [Building a JIT compiler for CPython](https://www.youtube.com/watch?v=kMO3Ju0QCDo)
+    - [What they don't tell you about building a JIT compiler for CPython](https://www.youtube.com/watch?v=NE-Oq8I3X_w)
+- Diego's EuroPython 2025 talk isn't up yet but I will link it as soon as it is available
+- ICYMI earlier in the post, Ken Jin's [Reflections on 2 years of CPython’s JIT Compiler: The good, the bad, the ugly](https://fidget-spinner.github.io/posts/jit-reflections.html) is also great if you want to learn more about the JIT builds in Python 3.14 and what it's taken to get to this point.
 - Check out [PEP 744](https://www.python.org/dev/peps/pep-0744/), it's really not that scary!
