@@ -22,7 +22,7 @@ I have authored or co-authored a couple PEPs, including [PEP 744](https://peps.p
 
 **I'm the treasurer of the [Jupyter Foundation Governing Board](https://jupyter.org/governance/people.html#jupyter-foundation-governing-board)**
 
-Alongside my role as a board member, I was elected to help manage the Jupyter Foundation Governing Boards's finances, develop strategy, process and budgets, and work with the Jupyter community to ensure the foundation is a good steward of its resources. 
+Alongside my role as a board member, I was elected to help manage the Jupyter Foundation Governing Board's finances, develop strategy, process and budgets, and work with the Jupyter community to ensure the foundation is a good steward of its resources. 
 
 **I work at Snowflake on Python developer experience**
 
