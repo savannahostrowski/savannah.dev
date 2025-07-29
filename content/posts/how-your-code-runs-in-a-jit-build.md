@@ -1,8 +1,8 @@
 ---
 title: "How JIT builds of CPython actually work"
 date: "2025-07-27"
-summary: "You don't have to be a compiler engineer to understand how your code runs in a JIT build of CPython."
-description: "You don't have to be a compiler engineer to understand how your code runs in a JIT build of CPython."
+summary: "You don't have to be a compiler engineer to understand how your code runs in a JIT build of CPython"
+description: "You don't have to be a compiler engineer to understand how your code runs in a JIT build of CPython"
 tags: ["Python", "JIT", "CPython"]
 ---
 
