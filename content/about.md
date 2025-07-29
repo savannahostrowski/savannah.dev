@@ -10,7 +10,7 @@ I'm Savannah Bailey (née Ostrowski - either last name is fine by me). If you've
 
 **I'm the Python 3.16 & 3.17 release manager**
 
-This work is mostly upcoming but I'm excited to be the [10th ever Python release manager](https://discuss.python.org/t/welcome-the-3-16-and-3-17-release-manager-savannah-bailey/). I look forward to working with contributors, triagers, and the core development team to make these releases the best they can be over the next ~7.5 years. Pressure is on to figure out how I'm going to sign off on each release and make sure we have the best release swag ever!
+This work is mostly upcoming but I'm excited to be the [next Python release manager](https://discuss.python.org/t/welcome-the-3-16-and-3-17-release-manager-savannah-bailey/). I look forward to working with contributors, triagers, and the core development team to make these releases the best they can be over the next ~7.5 years. Pressure is on to figure out how I'm going to sign off on each release and make sure we have the best release swag ever!
 
 **I'm a CPython core developer**
 
