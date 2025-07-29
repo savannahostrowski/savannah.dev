@@ -19,12 +19,9 @@ menu:
   - name: Blog
     url: /blog
     weight: 3
-  - name: Open Source
-    url: /open-source
-    weight: 4
   - name: Playground
     url: https://playground.savannah.dev
-    weight: 5
+    weight: 4
 
 params:
   env: production
