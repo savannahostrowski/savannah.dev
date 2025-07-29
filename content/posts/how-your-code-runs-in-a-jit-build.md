@@ -19,7 +19,7 @@ Alright, let's get after it.
 ...Well, before we get into what happens in a JIT build of Python, we should probably briefly talk about what happens in a "regular" build for anyone that isn't familiar with how the interpreter works, as this lays the foundation for the JIT builds later on. I think the best way to talk about this is by example. To cover this, let’s consider this very basic function:
 
 ```python
-def my_cool_function(a: int, b: int) -> int:
+def abs(a: int, b: int) -> int:
     if a > b:
         return a - b
     return b - a
@@ -28,14 +28,14 @@ So, let's say you execute this with your local version of Python and boom, the c
 
 ### First, your code is broken down into tokens
 
-When you run this code, the first thing that happens is that Python breaks it down into tokens. Tokens are the smallest units of meaning in your code, like keywords, identifiers, literals, and operators. For example, in our function, `def`, `my_cool_function`, `(`, `a`, `b`, `if`, `>`, `return`, and so on are all tokens. This process is known as lexical analysis or tokenization.
+When you run this code, the first thing that happens is that Python breaks it down into tokens. Tokens are the smallest units of meaning in your code, like keywords, identifiers, literals, and operators. For example, in our function, `def`, `abs`, `(`, `a`, `b`, `if`, `>`, `return`, and so on are all tokens. This process is known as lexical analysis or tokenization.
 You can see what the tokens for our function look like using the `tokenize` module in the standard library. Here’s how you can do that:
 
 ```python
 import tokenize
 from io import BytesIO
 source = b"""
-def my_cool_function(a: int, b: int) -> int:
+def abs(a: int, b: int) -> int:
     if a > b:
         return a - b
     return b - a
@@ -50,21 +50,21 @@ This will output a list of tokens that look something like this:
 ```plaintext
 TokenInfo(type=65 (ENCODING), string='utf-8', start=(0, 0), end=(0, 0), line='')
 TokenInfo(type=63 (NL), string='\n', start=(1, 0), end=(1, 1), line='\n')
-TokenInfo(type=1 (NAME), string='def', start=(2, 0), end=(2, 3), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=1 (NAME), string='my_cool_function', start=(2, 4), end=(2, 20), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=55 (OP), string='(', start=(2, 20), end=(2, 21), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=1 (NAME), string='a', start=(2, 21), end=(2, 22), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=55 (OP), string=':', start=(2, 22), end=(2, 23), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=1 (NAME), string='int', start=(2, 24), end=(2, 27), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=55 (OP), string=',', start=(2, 27), end=(2, 28), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=1 (NAME), string='b', start=(2, 29), end=(2, 30), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=55 (OP), string=':', start=(2, 30), end=(2, 31), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=1 (NAME), string='int', start=(2, 32), end=(2, 35), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=55 (OP), string=')', start=(2, 35), end=(2, 36), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=55 (OP), string='->', start=(2, 37), end=(2, 39), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=1 (NAME), string='int', start=(2, 40), end=(2, 43), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=55 (OP), string=':', start=(2, 43), end=(2, 44), line='def my_cool_function(a: int, b: int) -> int:\n')
-TokenInfo(type=4 (NEWLINE), string='\n', start=(2, 44), end=(2, 45), line='def my_cool_function(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='def', start=(2, 0), end=(2, 3), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='abs', start=(2, 4), end=(2, 7), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string='(', start=(2, 7), end=(2, 8), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='a', start=(2, 8), end=(2, 9), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=':', start=(2, 9), end=(2, 10), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='int', start=(2, 11), end=(2, 14), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=',', start=(2, 14), end=(2, 15), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='b', start=(2, 16), end=(2, 17), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=':', start=(2, 17), end=(2, 18), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='int', start=(2, 19), end=(2, 22), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=')', start=(2, 22), end=(2, 23), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string='->', start=(2, 24), end=(2, 26), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=1 (NAME), string='int', start=(2, 27), end=(2, 30), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=55 (OP), string=':', start=(2, 30), end=(2, 31), line='def abs(a: int, b: int) -> int:\n')
+TokenInfo(type=4 (NEWLINE), string='\n', start=(2, 31), end=(2, 32), line='def abs(a: int, b: int) -> int:\n')
 TokenInfo(type=5 (INDENT), string='    ', start=(3, 0), end=(3, 4), line='    if a > b:\n')
 TokenInfo(type=1 (NAME), string='if', start=(3, 4), end=(3, 6), line='    if a > b:\n')
 TokenInfo(type=1 (NAME), string='a', start=(3, 7), end=(3, 8), line='    if a > b:\n')
@@ -92,22 +92,22 @@ Yeah, that's...a lot but don't worry, you don't have to memorize it or anything.
 
 ### Next, your code is parsed
 
-Next, these tokens are combined to form a structure called an abstract syntax tree (AST), which is a tree-based representation of the structure of your code. The AST captures the hierarchical structure of your code, showing how different parts relate to each other. For example, in our function, the AST would show that `my_cool_function` is a function definition, `a` and `b` are parameters, and the `if` statement is a conditional that leads to different return statements.
+Next, these tokens are combined to form a structure called an abstract syntax tree (AST), which is a tree-based representation of the structure of your code. The AST captures the hierarchical structure of your code, showing how different parts relate to each other. For example, in our function, the AST would show that `abs` is a function definition, `a` and `b` are parameters, and the `if` statement is a conditional that leads to different return statements.
 
 It's also at this stage that Python checks for syntax errors. If there are any, it raises a `SyntaxError` and stops execution.
 
-We can see what our simple function above's AST would look like using the `ast` module in the standard library. The code looks something like this:
+We can see what our simple function above's AST would look like using the [`ast` module](https://docs.python.org/3/library/ast.html) in the standard library. The code looks something like this:
 
 ```python
 import ast
 
 source = """
-def my_cool_function(a: int, b: int) -> int:
+def abs(a: int, b: int) -> int:
     if a > b:
         return a - b
     return b - a
 
-my_cool_function(5, 3)
+abs(5, 3)
 """
 
 tree = ast.parse(source)
@@ -120,7 +120,7 @@ print(ast.dump(tree, indent=4))
 Module(
     body=[
         FunctionDef(
-            name='my_cool_function',
+            name='abs',
             args=arguments(
                 args=[
                     arg(
@@ -151,7 +151,7 @@ Module(
             returns=Name(id='int')),
         Expr(
             value=Call(
-                func=Name(id='my_cool_function'),
+                func=Name(id='abs'),
                 args=[
                     Constant(value=5),
                     Constant(value=3)]))])
@@ -163,15 +163,15 @@ Again, this is a lot of information for such a short function but what you shoul
 
 Next, Python compiles that AST down into bytecode, which is really a lower-level, platform-independent representation of your code. This is what the CPython interpreter actually executes. 
 
-Just like with the AST, you can see what the bytecode representation of this function would be. We can see what this would look like for the same function we looked at earlier using the `dis` module (aka the disassembly module) in the standard library. 
+Just like with the AST, you can see what the bytecode representation of this function would be. We can see what this would look like for the same function we looked at earlier using the [`dis` module](https://docs.python.org/3/library/dis.html) (aka the disassembly module) in the standard library. 
 
 ```python
 import dis
-def my_cool_function(a: int, b: int) -> int:
+def abs(a: int, b: int) -> int:
     if a > b:
         return a - b
     return b - a
-dis.dis(my_cool_function)
+dis.dis(abs)
 ```
 
 ```plaintext
@@ -218,7 +218,7 @@ For all intents and purposes, your code is now running in the Python interpreter
 Since Python 3.11, we've had something called the [Specializing Adaptive Interpreter](https://peps.python.org/pep-0659/) in CPython (a significant contributor to why
 Python 3.11 was about 25% faster than Python 3.10 for most workloads). We won't get into this too deep in this blog post but in essence, the idea here is that once a bytecode instruction has been executed enough times in a code path, the interpreter can "specialize" it based on types and values seen at runtime. 
 
-For example, let's consider the `BINARY_OP` instruction in our bytecode above. If the interpreter sees you're doing a lot of integer subtraction, it might opt to replace it with the specialized instruction that only handles integer subtraction, `BINARY_OP_SUBTRACT_INT`. This means that the interpreter can skip type checks and other overhead associated with more generic operations, making it faster even without the JIT compiler.
+For example, let’s consider the `BINARY_OP` instruction in our bytecode. If the interpreter sees you're doing a lot of integer subtraction, it might optimize that instruction internally by installing a fast path for integers. This means that while the bytecode still says `BINARY_OP`, the interpreter skips type checks and uses a specialized implementation for integer subtraction behind the scenes, making it significantly faster, even without the JIT compiler.
 
 ## Okay, so what happens in JIT builds?
 
@@ -245,9 +245,9 @@ In the context of CPython, our JIT compiler uses a technique called copy-and-pat
 1. When CPython is built, we use LLVM to generate precompiled stencil files for your specific platform and architecture. These stencil files contain templates for how to translate the micro-ops we talked about earlier into machine code.
 2. When your code is executed, the JIT compiler monitors the execution and identifies "hot" traces—sections of code that are executed frequently.
 3. When a hot trace is detected, the JIT compiler takes the relevant micro-ops, which are the smaller, specialized instructions we covered earlier, and uses the precompiled stencil templates to generate native machine code.
-4. The JIT compiler fills in the placeholders in the stencil templates with the actual values needed for your code, such as addresses of variables, constants, and cached results ("patching" up the code).
-5. These stencil files are then linked together to form a trace, which is a sequence of micro-ops that can be executed as native machine code.
-6. Finally, the JIT compiler executes this native machine code directly instead of interpreting.
+    - The JIT compiler fills in the placeholders in the stencil templates with the actual values needed for your code, such as addresses of variables, constants, and cached results ("patching" up the code).
+    - These stencil files are then linked together to form a trace, which is a sequence of micro-ops that can be executed as native machine code.
+    - Finally, the JIT compiler executes this native machine code directly instead of interpreting.
 
 > Now, the elephant in the room here is that the JIT does not (yet!) make Python a whole lot faster. In most cases, the JIT builds range from slower to about the same performance as the non-JIT build of Python. As of 3.14, the JIT is faster in select benchmarks but we have a ways to go still. Ken Jin has a great [blog post](https://fidget-spinner.github.io/posts/jit-reflections.html) that goes into more detail about the performance of the JIT builds in Python 3.14 (among other reflections) if you're interested.
 
