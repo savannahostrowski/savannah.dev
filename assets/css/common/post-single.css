@@ -197,10 +197,8 @@
 .post-content code {
     margin: auto 4px;
     padding: 4px 6px;
-    font-size: 0.78em;
+    font-size: 0.85em;
     line-height: 1.5;
-    background: var(--code-bg);
-    color: var(--secondary);
     border-radius: 2px;
 }
 
@@ -325,7 +323,7 @@
     color: var(--secondary);
     font-size: 14px;
     line-height: 34px;
-    background: var(--code-bg);
+    background: var(--primary);
 }
 
 
