@@ -25,12 +25,12 @@ menu:
 
 params:
   env: production
-  description: Python 3.16 & 3.17 Release Manager, CPython Core Developer & engineering at FastAPI Labs
+  description: Python 3.16 & 3.17 Release Manager, CPython Core Developer & Engineering at FastAPI Labs
 
 
   homeInfoParams:
     title: "Hey👋! I'm Savannah."
-    description: Python 3.16 & 3.17 Release Manager, CPython Core Developer & engineering at FastAPI Labs
+    description: Python 3.16 & 3.17 Release Manager, CPython Core Developer & Engineering at FastAPI Labs
 
 
   socialIcons:
