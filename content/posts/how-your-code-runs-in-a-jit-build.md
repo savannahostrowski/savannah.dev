@@ -3,10 +3,10 @@ title: "How JIT builds of CPython actually work"
 date: "2025-07-27"
 summary: "You don't have to be a compiler engineer to understand how your code runs in a JIT build of CPython"
 description: "You don't have to be a compiler engineer to understand how your code runs in a JIT build of CPython"
-tags: ["Python", "JIT", "CPython"]
+tags: ["Python", "JIT", "CPython", "You don't have to be a compiler engineer"]
 ---
 
->  This post is the first in a planned series around CPython internals. The goal here is to make complex topics related to CPython feel more approachable. If I missed something or you’d like to request a topic, feel free to drop me a line via [email](mailto:savannah@python.org).
+>  This is a post in a series around making CPython internals more approachable. If I missed something or you’d like to request a topic, feel free to drop me a line via [email](mailto:savannah@python.org). You also read other posts in the series [here](https://savannah.dev/tags/you-dont-have-to-be-a-compiler-engineer/).
 
 Ever wonder what really happens under the hood when you run your Python code? If you're using a JIT build of CPython, the answer may involve a few more steps than you'd expect but thankfully, you don't have to be a compiler engineer to understand it. 
 
@@ -271,3 +271,5 @@ Some other great talks, blog posts, etc. by other folks working on Python:
 - Diego's EuroPython 2025 talk isn't up yet but I will link it as soon as it is available
 - ICYMI earlier in the post, Ken Jin's [Reflections on 2 years of CPython’s JIT Compiler: The good, the bad, the ugly](https://fidget-spinner.github.io/posts/jit-reflections.html) is also great if you want to learn more about the JIT builds in Python 3.14 and what it's taken to get to this point.
 - Check out [PEP 744](https://www.python.org/dev/peps/pep-0744/), it's really not that scary!
+
+> If you enjoyed this post, please consider sharing it with anyone you think might find it interesting. If you have any questions or feedback, feel free to reach out to me via [email](mailto:savannah@python.org).

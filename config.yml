@@ -1,6 +1,6 @@
 baseURL: https://savannah.dev/
 languageCode: en-us
-title: Savannah Bailey
+title: Savannah Ostrowski
 theme: github.com/adityatelange/hugo-PaperMod
 
 # Add this line to use about.md as the home page
@@ -25,13 +25,12 @@ menu:
 
 params:
   env: production
-  description: Release Manager for Python 3.16 & 3.17, CPython core developer, Jupyter Foundation Governing Board treasurer, and Python developer experience at Snowflake.
+  description: Python 3.16 & 3.17 Release Manager, CPython Core Developer & engineering at FastAPI Labs
 
 
   homeInfoParams:
     title: "Hey👋! I'm Savannah."
-    subtitle: "née Savannah Ostrowski"
-    description: Release Manager for Python 3.16 & 3.17, CPython core developer, Jupyter Foundation Governing Board treasurer, and Python developer experience at Snowflake.
+    description: Python 3.16 & 3.17 Release Manager, CPython Core Developer & engineering at FastAPI Labs
 
 
   socialIcons:
