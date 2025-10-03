@@ -22,7 +22,7 @@ I have authored or co-authored a couple PEPs, including [PEP 744](https://peps.p
 
 **I work at FastAPI Labs**
 
-As of October 2025, I work at [FastAPI Labs](https://fastapilabs.com/) to help build the future of deploying FastAPI applications. I'm excited to work on developer tools that improve the experience for Python developers, especially those using FastAPI. You can read more about my decision to join the team in my [blog post](https://savannah.dev/posts/a-new-chapter/).
+As of October 2025, I work at [FastAPI Labs](https://fastapilabs.com/) helping build the future of deploying and managing FastAPI applications 🚀. You can read more about my decision to join the team in my [blog post](https://savannah.dev/posts/a-new-chapter/).
 
 ## Fun facts and other non-tech stuff
 
