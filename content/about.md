@@ -35,4 +35,4 @@ As of October 2025, I work at [FastAPI Labs](https://fastapilabs.com/) helping b
 
 ## Contact me
 
-I'm pretty active on Bluesky, so you can find me there at [@savannah.dev](https://bsky.app/profile/savannah.dev). You can also [email](mailto:savannah@python.org) me at my python.org email address. I can't promise that I'll respond to every email I receive, but I do read them all. If you want to get in touch with me about Python, Jupyter, or anything else, feel free to reach out.
+I'm pretty active on Bluesky, so you can find me there at [@savannah.dev](https://bsky.app/profile/savannah.dev). You can also [email](mailto:savannah@python.org) me at my python.org email address. I can't promise that I'll respond to every email I receive, but I do read them all.
