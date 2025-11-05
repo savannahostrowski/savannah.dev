@@ -37,6 +37,7 @@ Unfortunately, that didn't work!
 > *Live footage of me passing `-mcmodel=large` into the compiler for the fifth time, hoping it fixes all my problems*
 
 So, I gave up…not really…But I did take a week break for the offsite and PyCon Spain.
+
 However, on the way home from Spain, I had six whole hours in the Paris airport during my layover to get back at it. Thinking more about this problem, I remembered that [Diego had implemented trampolines for aarch64](https://github.com/python/cpython/pull/123872) a while back. I decided to give up on compiler flags and really go down the rabbit hole. What ensued next was a long while of reading [x86_64 instruction encoding](https://wiki.osdev.org/X86-64_Instruction_Encoding) to figure out how I could maybe handwrite x86-64 machine code byte-by-byte…a dark, dark place.
 
 ## Okay, so what the heck is a trampoline…
