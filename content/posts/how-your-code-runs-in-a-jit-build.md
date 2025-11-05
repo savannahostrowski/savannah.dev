@@ -268,7 +268,7 @@ Some other great talks, blog posts, etc. by other folks working on Python:
 - Maybe watch one of Brandt's talks on this topic: 
     - [Building a JIT compiler for CPython](https://www.youtube.com/watch?v=kMO3Ju0QCDo)
     - [What they don't tell you about building a JIT compiler for CPython](https://www.youtube.com/watch?v=NE-Oq8I3X_w)
-- Diego's EuroPython 2025 talk isn't up yet but I will link it as soon as it is available
+- Diego's [EuroPython 2025 talk](https://www.youtube.com/watch?v=5si4zkAngpA)
 - ICYMI earlier in the post, Ken Jin's [Reflections on 2 years of CPython’s JIT Compiler: The good, the bad, the ugly](https://fidget-spinner.github.io/posts/jit-reflections.html) is also great if you want to learn more about the JIT builds in Python 3.14 and what it's taken to get to this point.
 - Check out [PEP 744](https://www.python.org/dev/peps/pep-0744/), it's really not that scary!
 
