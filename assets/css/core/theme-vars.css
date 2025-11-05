@@ -27,6 +27,8 @@
     --hljs-bg: #e1b5bd;
     --code-bg: #e1b5bd;
     --border: #e1b5bd;
+    --hljs-comment: #6c5477;
+    --hljs-function: #a3a3c2;
 }
 
 .list {

@@ -1,6 +1,23 @@
+/* Comments styling - lighter for light mode */
 .hljs-comment,
 .hljs-quote {
-    color: #b6b18b;
+    color: #9d8ba8;
+}
+
+/* Comments darker in dark mode */
+.dark .hljs-comment,
+.dark .hljs-quote {
+    color: #6c5477;
+}
+
+.hljs-function {
+    color: #6c5477;
+}
+
+/* Override inline styles for function calls */
+.hljs[style*="color:#a6e22e"],
+.hljs *[style*="color:#a6e22e"] {
+    color: #3d6b31 !important;
 }
 
 .hljs-deletion,
@@ -38,7 +55,7 @@
 
 .hljs-section,
 .hljs-title {
-    color: #539c41; /* Darker green (was #78bb65) */
+    color: #3d6b31; /* Even darker green for better contrast */
 }
 
 .hljs-keyword,
