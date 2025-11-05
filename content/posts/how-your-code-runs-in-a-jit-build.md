@@ -6,7 +6,7 @@ description: "You don't have to be a compiler engineer to understand how your co
 tags: ["Python", "JIT", "CPython", "You don't have to be a compiler engineer"]
 ---
 
->  This is a post in a series around making CPython internals more approachable. If I missed something or you’d like to request a topic, feel free to drop me a line via [email](mailto:savannah@python.org). You also read other posts in the series [here](https://savannah.dev/tags/you-dont-have-to-be-a-compiler-engineer/).
+>  This is a post in a series around making CPython internals more approachable. If I missed something or you’d like to request a topic, feel free to drop me a line via [email](mailto:savannah@python.org). You can also read other posts in the series [here](https://savannah.dev/tags/you-dont-have-to-be-a-compiler-engineer/).
 
 Ever wonder what really happens under the hood when you run your Python code? If you're using a JIT build of CPython, the answer may involve a few more steps than you'd expect but thankfully, you don't have to be a compiler engineer to understand it. 
 
