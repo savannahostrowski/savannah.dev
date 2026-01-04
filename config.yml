@@ -25,12 +25,27 @@ menu:
 
 params:
   env: production
-  description: I'm a Python Steering Council member, the 3.16 & 3.17 Release Manager, & building at FastAPI Labs
+  description: I'm a Python Steering Council member, the 3.16 & 3.17 Release Manager & building at FastAPI Labs
+
+  # Default social sharing image used for Open Graph and Twitter cards
+  images:
+    - "/img/social-share.png"
+
+  # SEO: default author name used across pages
+  author: "Savannah Ostrowski"
+
+  # Schema.org settings for better SEO
+  schema:
+    publisherType: Person
+    sameAs:
+      - "https://github.com/savannahostrowski"
+      - "https://bsky.app/profile/savannah.dev"
+      - "https://linkedin.com/in/savannahostrowski"
 
 
   homeInfoParams:
     title: "Hey👋! I'm Savannah."
-    description: I'm a Python Steering Council member, the 3.16 & 3.17 Release Manager, & building at FastAPI Labs
+    description: I'm a Python Steering Council member, the 3.16 & 3.17 Release Manager & building at FastAPI Labs
 
 
   socialIcons:
@@ -49,8 +64,6 @@ params:
   showWordCount: true
   showToc: true
 
-  schema:
-    publisherType: Person
 
 outputs:
   home:

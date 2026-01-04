@@ -1,0 +1,10 @@
+{{- /* Custom SEO meta additions */ -}}
+{{- /* Publisher meta: complements JSON-LD publisher */ -}}
+<meta name="publisher" content="{{ site.Title }}">
+
+{{- /* Copyright meta: uses site.Copyright if set, otherwise fallback */ -}}
+{{- if site.Copyright -}}
+<meta name="copyright" content="{{ site.Copyright | plainify }}">
+{{- else -}}
+<meta name="copyright" content="© {{ now.Year }} {{ site.Title }}">
+{{- end -}}
