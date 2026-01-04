@@ -1,6 +1,6 @@
 baseURL: https://savannah.dev/
 languageCode: en-us
-title: Savannah Ostrowski
+title: Savannah Ostrowski — Python Steering Council, CPython RM
 theme: github.com/adityatelange/hugo-PaperMod
 
 # Add this line to use about.md as the home page
@@ -25,7 +25,11 @@ menu:
 
 params:
   env: production
-  description: I'm a Python Steering Council member, the 3.16 & 3.17 Release Manager & building at FastAPI Labs
+  description: Python Steering Council member, CPython Release Manager (3.16 and 3.17), Python Core Developer, and Engineer at FastAPI Labs.
+
+  # Keep short brand text in the header while using a longer SEO title
+  label:
+    text: "Savannah Ostrowski"
 
   # Default social sharing image used for Open Graph and Twitter cards
   images:
