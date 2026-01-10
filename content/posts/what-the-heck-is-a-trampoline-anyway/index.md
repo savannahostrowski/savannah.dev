@@ -42,7 +42,7 @@ However, on the way home from Spain, I had six whole hours in the Paris airport 
 
 ## Okay, so what the heck is a trampoline…
 
-Okay, she's said the title of the blog post. We must be getting close! Yes, okay…so this is what a trampoline is - it's a small piece of code that acts as a bridge to another place in memory, some place we cannot directly reach. In this case, we need to access some symbol that's more than 2GB away from where we currently are in memory.
+Okay, she's said the title of the blog post. We must be getting close! Yes, okay…so this is what a trampoline is - it's a small piece of code that acts as a bridge to another place in memory, some place we cannot directly reach[^1]. In this case, we need to access some symbol that's more than 2GB away from where we currently are in memory.
 
 In the stencil snippet I linked to above, you'll notice some lines that say `patch_x86_64_trampoline`. Let's look at the actual patch instruction for the trampoline and walk through it.
 ```c
@@ -154,3 +154,4 @@ If you made it this far, congrats! You now know way more about trampolines than 
 
 > If you enjoyed this post, please consider sharing it with anyone you think might find it interesting. If you have any questions or feedback, feel free to reach out to me via [email](mailto:savannah@python.org).
 
+[^1]: **A note on terminology**: If you're familiar with programming language literature, you might know "trampoline" from its classic definition in continuation-passing style: where a function returns another function to its caller rather than calling it directly, enabling tail-call optimization without stack growth. In CPython's JIT context, however, we use "trampoline" to refer to a small piece of machine code that serves as an intermediary jump point to reach distant memory addresses that can't be accessed directly due to instruction set limitations.
