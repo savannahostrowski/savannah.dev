@@ -43,9 +43,9 @@ The whole flow to get everything set up should only take a few minutes to config
 While I built this primarily out of curiosity and for our workflow at work, you’re welcome to give this a shot! If you're running Python 3.14, give it a spin by `uv tool install debugwand` (see PyPI [here](https://pypi.org/project/debugwand/)).
 
 After that, you’ll need to:
-Ensure your cluster/container has [SYS_PTRACE kernel capabilities enabled](https://github.com/savannahostrowski/debugwand/blob/main/docs/troubleshooting.md#permission-denied--cap_sys_ptrace). Remember! Local development only, please!
-Make sure you’ve port forwarded 5679 (or whatever port you want to use)
-Set up your [launch.json](https://github.com/savannahostrowski/debugwand#connect-your-editor) if you’re using VS Code.
+- Ensure your cluster/container has [SYS_PTRACE kernel capabilities enabled](https://github.com/savannahostrowski/debugwand/blob/main/docs/troubleshooting.md#permission-denied--cap_sys_ptrace). Remember! Local development only, please!
+- Make sure you’ve port forwarded 5679 (or whatever port you want to use)
+- Set up your [launch.json](https://github.com/savannahostrowski/debugwand#connect-your-editor) if you’re using VS Code.
 
 Then it’s just:
 ```
