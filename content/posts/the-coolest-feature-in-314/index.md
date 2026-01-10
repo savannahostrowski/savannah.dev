@@ -1,8 +1,8 @@
 ---
 title: "The coolest feature in Python 3.14"
 date: "2026-01-09"
-summary: "…can be used to build a zero-preparation remote debugger for Kubernetes and Docker containers?"
-description: "…can be used to build a zero-preparation remote debugger for Kubernetes and Docker containers?"
+summary: "…can be used to build a zero-preparation remote debugger for Python applications running in Kubernetes and Docker containers?"
+description: "…can be used to build a zero-preparation remote debugger for Python applications running in Kubernetes and Docker containers?"
 tags: ["python", "debugging", "development tools", "kubernetes", "docker"]
 ---
 
