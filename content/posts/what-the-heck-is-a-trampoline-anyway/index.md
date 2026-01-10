@@ -32,7 +32,7 @@ So naturally, I tried the simplest option first. I started down this rabbit hole
 
 Unfortunately, that didn't work!
 
-{{< figure src="../tired-dw.jpg" alt="A meme of DW from Arthur looking extremely tired while smiling" width="600" >}}
+{{< figure src="images/tired-dw.jpg" alt="A meme of DW from Arthur looking extremely tired while smiling" width="600" >}}
 
 > *Live footage of me passing `-mcmodel=large` into the compiler for the fifth time, hoping it fixes all my problems*
 

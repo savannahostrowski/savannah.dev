@@ -16,7 +16,7 @@ You might be wondering, "Savannah, why do this? Didn't you used to work on Azure
 
 Alright, I might have had Dune on the brain when I built this, but Dune Part Two is literally a masterpiece, so can you blame me? My little rig consists of 3 Raspberry Pi 4Bs (each with 4 CPUs and 8 GB RAM), all running Raspberry Pi OS Lite (64-bit), which is a port of Debian Bullseye without a desktop environment. Each of these devices uses Power over Ethernet (PoE) for networking and power over a single cable per Pi. I'll delve into this a bit later, but it's worth noting that the cluster doesn't run Kubernetes; instead, it leverages Docker Swarm to create the cluster (it's literally 2 commands to configure everything – mind blown!).
 
-![A photo of the cluster sitting in my closet](../cluster-1.png)
+![A photo of the cluster sitting in my closet](images/cluster-1.png)
 
 ### Materials for the build
 
@@ -57,7 +57,7 @@ I'll be honest – I initially planned to set up the cluster with Kubernetes via
 - Boom! You have yourself a cluster ✨
   
 Seriously, it's that simple! You can validate that everything is working as expected using `docker node ls` on any of your nodes.
-![Output of docker node ls, with three nodes all in ready state](../docker-node-ls.png)
+![Output of docker node ls, with three nodes all in ready state](images/docker-node-ls.png)
 
 > Note: I did run into one little snag with networking, where the default network of the cluster overlapped 1:1 with my home network. I discovered this much later when ingress was broken and I couldn't figure out why. Before moving on, it might be worth verifying that this is not the case. If it is, the fix is fairly simple. You'll just need to [customize the ingress network](https://docs.docker.com/engine/swarm/networking/#customize-ingress). Shout out to [this StackOverflow post](https://stackoverflow.com/questions/59007780/container-running-on-docker-swarm-not-accessible-from-outside/63405536#63405536) for helping me debug this!
 
@@ -137,7 +137,7 @@ networks:
   ```
 
 The last bit here is to configure your public hostnames. In my case, I had one for each website I was deploying. What's really neat is that you just have to pass in the service `name:port` (where service name matches the Compose service name and port matches your port internal to the container) for it to all work.
-![Configuring a hostname for my personal website on Cloudflare](../cloudflare-hostname.png)
+![Configuring a hostname for my personal website on Cloudflare](images/cloudflare-hostname.png)
 
 ## Bonus: Set up Tailscale for easy access to my cluster nodes
 
