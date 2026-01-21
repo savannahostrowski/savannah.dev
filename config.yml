@@ -3,6 +3,11 @@ languageCode: en-us
 title: Savannah Ostrowski — Python Steering Council, CPython RM
 theme: github.com/adityatelange/hugo-PaperMod
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
 # Add this line to use about.md as the home page
 paginate: 5
 frontmatter:
@@ -19,8 +24,8 @@ menu:
   - name: Blog
     url: /blog
     weight: 3
-  - name: Playground
-    url: https://playground.savannah.dev
+  - name: Projects
+    url: /projects
     weight: 4
 
 params:
