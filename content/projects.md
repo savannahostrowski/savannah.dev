@@ -19,13 +19,14 @@ An embeddable Python REPL powered by Pyodide. Add Python to your website with ju
 
 A tiny (and pretty) program for viewing + killing listening ports on your machine.
 
-[GitHub](https://github.com/savannahostrowski/gruyere) [PyPI](https://pypi.org/project/gruyere/)
+[GitHub](https://github.com/savannahostrowski/gruyere) ・ [PyPI](https://pypi.org/project/gruyere/)
 
 ---
 
 ## every-python
 
 A utility to build any commit of CPython, using smart caching. Build any commit of CPython (branch, tag, commit hash) with just one command. Supports building with the JIT enabled by auto-detecting the version of LLVM required.
+
 [GitHub](https://github.com/savannahostrowski/every-python) ・ [PyPI](https://pypi.org/project/every-python/)
 
 ---
