@@ -83,6 +83,8 @@ However, my server farm does show more interesting results! On our [nightly runs
 - ~8% speedups on my M3 Pro (jones) — aarch64
 - ~15% speedups on my AMD Ryzen 5 3600X running Windows 11 (prometheus) — x86_64
 
+Beyond tracking nightly progress, the dashboard has also helped us catch performance regressions from PRs the same day they land, which feels awesome! The power of data!
+
 ![A chart from doesjitgobrrr.com showing JIT speedups across different machines, with the highest being around 15% on Windows and the lowest around 2% on a Raspberry Pi 5.](images/does-jit-go-brrr.png)
 
 …and to be honest, that's pretty awesome if you ask me. Yes, we still have work ahead of us, but man, I'm super proud of all the work we've done over the past few months that have gotten us this far. The JIT has also become pretty community-driven at this point, and we're actively building up new contributors! Super exciting stuff!
