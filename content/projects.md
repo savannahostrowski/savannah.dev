@@ -29,18 +29,3 @@ A utility to build any commit of CPython, using smart caching. Build any commit 
 
 [GitHub](https://github.com/savannahostrowski/every-python) ・ [PyPI](https://pypi.org/project/every-python/)
 
----
-
-## debugwand
-
-A zero-preparation remote debugger for Python applications running in Kubernetes clusters or Docker containers. With `debugwand`, there's no sidecar pod, no application code changes, and virtually no setup required.
-
-[GitHub](https://github.com/savannahostrowski/debugwand) ・ [PyPI](https://pypi.org/project/debugwand/)
-
----
-
-## doesjitgobrrr
-
-A (unofficial) dashboard to track CPython's JIT performance compared to the standard interpreter over time. This project is both a UI and all of the benchmarking infrastructure that powers it. I maintain a mini server farm of 4 separate runners across different platforms and architectures in my home lab to collect the data nightly.
-
-[GitHub](https://github.com/savannahostrowski/doesjitgobrrr) ・ [Dashboard](https://doesjitgobrrr.com)
