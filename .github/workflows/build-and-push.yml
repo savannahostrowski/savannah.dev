@@ -11,6 +11,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Checkout remote-debug-talk
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: savannahostrowski/debugwand-talk
+          token: ${{ secrets.TALK_REPO_TOKEN }}
+          path: _talks/remote-debug-talk
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+
+      - name: Build remote-debug-talk slides
+        working-directory: _talks/remote-debug-talk
+        run: |
+          bun install
+          bun run build -- --base /talks/remote-debug/
+
+      - name: Copy slides to Hugo static
+        run: |
+          mkdir -p static/talks/remote-debug
+          cp -r _talks/remote-debug-talk/dist/. static/talks/remote-debug/
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@ce360397dd3f832beb865e1373c09c0e9f86d70a # v4.0.0
       - name: Set up Docker Buildx
