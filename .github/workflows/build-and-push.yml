@@ -50,11 +50,3 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: savannahostrowski/savannah.dev:latest
-
-      - name: Deploy to RPi cluster
-        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
-        with:
-          host: ${{ secrets.RPI_HOST }}
-          username: ${{ secrets.RPI_USER }}
-          key: ${{ secrets.RPI_SSH_KEY }}
-          script: docker service update --force --image savannahostrowski/savannah.dev:latest arrakis_savannahdev
