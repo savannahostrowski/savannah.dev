@@ -27,7 +27,7 @@ jobs:
         working-directory: _talks/remote-debug-talk
         run: |
           bun install
-          bun run build -- --base /talks/remote-debug/
+          bun run build -- --base /talks/remote-debug/ --no-presenter
 
       - name: Copy slides to Hugo static
         run: |
