@@ -3,7 +3,7 @@ title: "A new chapter"
 date: "2025-10-03"
 summary: "how i'm feeling now"
 description: "how i'm feeling now"
-tags: ["career", "FastAPI Labs", "python", "reflections"]
+tags: ["Career", "FastAPI Labs", "Python", "Reflections"]
 ---
 
 > **TL;DR I'm joining the engineering team at FastAPI Labs ⚡ and closing this chapter of my career in product management. Read on for more!**

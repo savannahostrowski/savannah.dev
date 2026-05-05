@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<ul class="project-grid">
+    {% for p in projects %}
+    <li class="project-card">
+        <h2 class="project-name">{{ p.name }}</h2>
+        <p class="project-tagline">{{ p.tagline }}</p>
+        {% if p.links %}
+        <div class="project-links">
+            {% for link in p.links %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }} →</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,9 @@
+FROM python:3.14-slim
+
+WORKDIR /app
+
+RUN pip install uv
+
+EXPOSE 8000
+
+CMD ["sh", "-c", "uv sync && uv run fastapi dev main.py --host 0.0.0.0 --port 8000"]

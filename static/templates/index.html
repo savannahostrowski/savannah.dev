@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul class="post-list">
+     {% for post in posts %}
+     <li class="post-item">
+         <div class="post-date">{{ post.date.strftime("%B %d, %Y") }}</div>
+         <h2><a href="/posts/{{ post.slug }}/">{{ post.title }}</a></h2>
+         {% if post.summary %}
+         <p class="post-summary">{{ post.summary }}</p>
+         {% endif %}
+         {% if post.tags %}
+         <div class="post-tags">
+             {% for tag in post.tags %}
+             <a href="/tags/{{ slugify(tag) }}/">{{ tag }}</a>
+             {% endfor %}
+         </div>
+         {% endif %}
+     </li>
+     {% endfor %}
+</ul>
+{% endblock %}

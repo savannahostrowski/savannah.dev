@@ -45,6 +45,7 @@ bench_runner also relies on your having configured a results repository, in my c
 The actual runner setup was surprisingly straightforward — GitHub's [self-hosted runner documentation](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners) walks you through it. You're basically downloading a runner application, configuring it with a token from your repo, and running it as a service. The runner then polls GitHub for jobs that match its labels.
 
 The trickier part is getting the benchmarking environment right. Each machine needs:
+
 - **Build dependencies** for compiling CPython from source (gcc/clang, make, libssl-dev, etc.)
 - **LLVM** installed (the JIT needs it for compilation)
 - **bench_runner** and its dependencies
@@ -68,6 +69,7 @@ All this to say, it's not too tricky but expect some friction and debugging  if 
 ## The dashboard pipeline
 
 Here's what happens every night:
+
 - Each runner runs the benchmark suite twice:  once for the interpreter, once with the JIT enabled, via a GitHub Action on a cron schedule
 - The results are compared per machine to derive the speedup
 - After all runs finish, I trigger a dashboard refresh which runs a script on another Raspberry Pi cluster (since I also self-host everything 🤠). The script pulls any new results, computes the geometric mean using pyperf, and loads everything into the database.
@@ -78,6 +80,7 @@ Here's what happens every night:
 If you recall from various PyCon talks, Brandt has jokingly said the JIT was "0% faster/slower" for quite a while. However, things are actually coming together now! Results are quite dependent on operating system and hardware specs, but preliminary results show that the JIT is about [4-5% faster](https://docs.python.org/3.15/whatsnew/3.15.html#whatsnew315-jit) than the interpreter on x86-64 Linux, and 7-8% faster on AArch64 macOS over the tail-calling interpreter in 3.15, as evidenced by runners sponsored by Meta.
 
 However, my server farm does show more interesting results! On our [nightly runs](https://doesjitgobrrr.com/?goals=10)  funded by yours truly, we're regularly seeing:
+
 - ~2% speedups on my Raspberry Pi 5 (blueberry) — aarch64
 - ~5% speedups on my i5 running Ubuntu 24.04 (ripley) — x86_64
 - ~8% speedups on my M3 Pro (jones) — aarch64
@@ -90,6 +93,7 @@ Beyond tracking nightly progress, the dashboard has also helped us catch perform
 …and to be honest, that's pretty awesome if you ask me. Yes, we still have work ahead of us, but man, I'm super proud of all the work we've done over the past few months that have gotten us this far. The JIT has also become pretty community-driven at this point, and we're actively building up new contributors! Super exciting stuff!
 
 ## Reading materials and links
+
 - [The unofficial JIT performance dashboard — does JIT go brrr?](https://doesjitgobrrr.com/)
 - [pyperf_bench — where all my data lives from our runs](https://github.com/savannahostrowski/pyperf_bench)
 - [doesjitgobrrr on GitHub](https://github.com/savannahostrowski/doesjitgobrrr)
