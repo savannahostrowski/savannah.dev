@@ -6,6 +6,8 @@ description: "Moving all my personal websites to a Raspberry Pi cluster sitting 
 tags: ["Physical Computing", "Raspberry Pi", "Docker", "Self-hosting", "Hacking"]
 ---
 
+> **Update (May 2026):** I've since moved my sites (this one included) off the Pi cluster and onto [FastAPI Cloud](https://fastapicloud.com/) to free up resources for other fun experimentation. The post below is preserved as-is.
+
 This post is an overview of how I went off the grid – or, in other words, moved all my personal websites off Azure and onto a Raspberry Pi cluster sitting in my home office. This isn't exactly a tutorial blog post, but feel free to use this as a reference. 
 
 ## Why do this at all?
