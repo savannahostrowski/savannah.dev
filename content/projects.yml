@@ -1,0 +1,35 @@
+- name: doesjitgobrrr
+  tagline: An unofficial dashboard tracking CPython's JIT performance over time, powered by a four-machine home benchmarking lab.
+  links:
+    - {label: Dashboard, url: "https://doesjitgobrrr.com"}
+    - {label: GitHub, url: "https://github.com/savannahostrowski/doesjitgobrrr"}
+
+- name: coredispatch.xyz
+  tagline: A regular digest of what's happening in Python core development — merged PRs, PEP decisions, community discussions, and upcoming events.
+  links:
+    - {label: Subscribe, url: "https://coredispatch.xyz"}
+    - {label: GitHub, url: "https://github.com/savannahostrowski/coredispatch.xyz"}
+
+- name: debugwand
+  tagline: A zero-prep remote debugger for Python apps running in Kubernetes or Docker. No sidecar pod, no code changes, no setup.
+  links:
+    - {label: GitHub, url: "https://github.com/savannahostrowski/debugwand"}
+    - {label: PyPI, url: "https://pypi.org/project/debugwand/"}
+
+- name: pyrepl-web
+  tagline: An embeddable Python REPL powered by Pyodide. Add Python to your site with a few lines of HTML — supports pre-loading packages and theming.
+  links:
+    - {label: GitHub, url: "https://github.com/savannahostrowski/pyrepl-web"}
+    - {label: npm, url: "https://www.npmjs.com/package/pyrepl-web"}
+
+- name: gruyere
+  tagline: A tiny (and pretty) program for viewing and killing listening ports on your machine.
+  links:
+    - {label: GitHub, url: "https://github.com/savannahostrowski/gruyere"}
+    - {label: PyPI, url: "https://pypi.org/project/gruyere/"}
+
+- name: every-python
+  tagline: Build any commit of CPython (branch, tag, hash) with one command. Smart caching, auto-detects the LLVM version needed for JIT builds.
+  links:
+    - {label: GitHub, url: "https://github.com/savannahostrowski/every-python"}
+    - {label: PyPI, url: "https://pypi.org/project/every-python/"}

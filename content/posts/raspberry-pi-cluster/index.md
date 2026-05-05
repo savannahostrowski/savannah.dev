@@ -90,7 +90,7 @@ services:
      replicas: 3
 networks:
   arrakis: {}
-  ```
+```
 
 Deploying this Compose file is a single command using `docker stack deploy --compose-file docker-compose.yml arrakis` from the leader node. Once this command was run, I validated that the services were operational via `docker stack services arrakis`.
 
@@ -134,7 +134,7 @@ services:
     - arrakis
 networks:
   arrakis: {}
-  ```
+```
 
 The last bit here is to configure your public hostnames. In my case, I had one for each website I was deploying. What's really neat is that you just have to pass in the service `name:port` (where service name matches the Compose service name and port matches your port internal to the container) for it to all work.
 ![Configuring a hostname for my personal website on Cloudflare](images/cloudflare-hostname.png)

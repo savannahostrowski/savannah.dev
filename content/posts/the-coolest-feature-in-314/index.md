@@ -3,7 +3,7 @@ title: "The coolest feature in Python 3.14"
 date: "2026-01-09"
 summary: "…can be used to build a zero-preparation remote debugger for Python applications running in Kubernetes and Docker containers?"
 description: "…can be used to build a zero-preparation remote debugger for Python applications running in Kubernetes and Docker containers?"
-tags: ["python", "debugging", "development tools", "kubernetes", "docker"]
+tags: ["Python", "Debugging", "Development Tools", "Kubernetes", "Docker"]
 ---
 
 As you may already know, I love containers. I think they are truly a magical and amazing piece of technology because of the freedom and ease of use they afford. However, using containers (or Kubernetes) can add complexity to your workflow. When we stick our software in a container, we naturally add a bit of a barrier between our local development environment and the software we’re building, unless of course you’re using a Dev Container in which case things get pretty meta…but I digress.
@@ -43,6 +43,7 @@ The whole flow to get everything set up should only take a few minutes to config
 While I built this primarily out of curiosity and for our workflow at work, you’re welcome to give this a shot! If you're running Python 3.14, give it a spin by `uv tool install debugwand` (see PyPI [here](https://pypi.org/project/debugwand/)).
 
 After that, you’ll need to:
+
 - Ensure your cluster/container has [SYS_PTRACE kernel capabilities enabled](https://github.com/savannahostrowski/debugwand/blob/main/docs/troubleshooting.md#permission-denied--cap_sys_ptrace). Remember! Local development only, please!
 - Make sure you’ve port forwarded 5679 (or whatever port you want to use)
 - Set up your [launch.json](https://github.com/savannahostrowski/debugwand#connect-your-editor) if you’re using VS Code.
@@ -59,6 +60,7 @@ wand debug --container my-container
 And then you’re off to the races! Just start your debugger and set some breakpoints!
 
 ## Reading materials and links
+
 - [Remote debugging attachment protocol](https://docs.python.org/3.14/howto/remote_debugging.html#remote-debugging)
 - [`debugwand` on GitHub](https://github.com/savannahostrowski/debugwand)
 - [`debugwand` on PyPI](https://pypi.org/project/debugwand/)

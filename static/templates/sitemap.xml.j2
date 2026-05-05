@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>{{ site_url }}/</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{{ site_url }}/about/</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>{{ site_url }}/projects/</loc>
+        <priority>0.8</priority>
+    </url>
+    {% for post in posts %}
+    <url>
+        <loc>{{ site_url }}/posts/{{ post.slug }}/</loc>
+        <lastmod>{{ post.date.strftime("%Y-%m-%d") }}</lastmod>
+        <priority>0.7</priority>
+    </url>
+    {% endfor %}
+    {% for tag_slug in tag_slugs %}
+    <url>
+        <loc>{{ site_url }}/tags/{{ tag_slug }}/</loc>
+        <priority>0.5</priority>
+    </url>
+    {% endfor %}
+</urlset>

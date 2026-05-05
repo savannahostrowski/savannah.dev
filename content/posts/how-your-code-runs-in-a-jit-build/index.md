@@ -254,6 +254,7 @@ In the context of CPython, our JIT compiler uses a technique called copy-and-pat
 ## Putting it all together
 
 So, to summarize, when you run your code in a JIT build of CPython, the following happens:
+
 1. Your code is tokenized, parsed, and compiled into bytecode as usual.
 2. The bytecode is executed by the regular bytecode interpreter, which may specialize some instructions based on runtime profiling.
 3. If the code is executed enough times, the micro-op interpreter kicks in, breaking down the bytecode instructions into smaller, more specialized uops.
@@ -265,6 +266,7 @@ So, to summarize, when you run your code in a JIT build of CPython, the followin
 ## Suggested readings & videos
 
 Some other great talks, blog posts, etc. by other folks working on Python:
+
 - Maybe watch one of Brandt's talks on this topic: 
     - [Building a JIT compiler for CPython](https://www.youtube.com/watch?v=kMO3Ju0QCDo)
     - [What they don't tell you about building a JIT compiler for CPython](https://www.youtube.com/watch?v=NE-Oq8I3X_w)

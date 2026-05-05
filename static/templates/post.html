@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-header">
+    <h1>{{ post.title }}</h1>
+    {% if not post.hide_meta %}
+    <div class="post-date">{{ post.date.strftime("%B %d, %Y") }}</div>
+    {% if post.tags %}
+    <div class="post-tags" style="margin-top:0.5rem;">
+        {% for tag in post.tags %}
+        <a href="/tags/{{ slugify(tag) }}/">{{ tag }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+<div class="post-body">
+    {{ post.body_html | safe }}
+</div>
+{% if newer or older %}
+<nav class="post-nav" aria-label="Post navigation">
+    {% if older %}
+    <a class="post-nav-prev" href="/posts/{{ older.slug }}/">
+        <span class="post-nav-label">← Older</span>
+        <span class="post-nav-title">{{ older.title }}</span>
+    </a>
+    {% else %}<span></span>{% endif %}
+    {% if newer %}
+    <a class="post-nav-next" href="/posts/{{ newer.slug }}/">
+        <span class="post-nav-label">Newer →</span>
+        <span class="post-nav-title">{{ newer.title }}</span>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - /app/.venv
+    environment:
+      - PYTHONUNBUFFERED=1
