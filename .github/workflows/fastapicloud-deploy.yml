@@ -17,6 +17,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Checkout remote-debug-talk
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: savannahostrowski/remote-debug-talk
+          token: ${{ secrets.TALK_REPO_TOKEN }}
+          path: _talks/remote-debug-talk
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+
+      - name: Build remote-debug-talk slides
+        working-directory: _talks/remote-debug-talk
+        run: |
+          bun install
+          bun run build -- --base /talks/remote-debug/ --without-notes
+
+      - name: Copy slides into talks/
+        run: |
+          mkdir -p talks/remote-debug
+          cp -r _talks/remote-debug-talk/dist/. talks/remote-debug/
+
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
 

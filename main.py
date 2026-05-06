@@ -192,6 +192,10 @@ def render(
 app = FastAPI(docs_url=None, redoc_url=None)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
+TALKS_DIR = BASE_DIR / "talks"
+if TALKS_DIR.is_dir():
+    app.mount("/talks", StaticFiles(directory=TALKS_DIR, html=True), name="talks")
+
 
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request: Request, exc: StarletteHTTPException):
