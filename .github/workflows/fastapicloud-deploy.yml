@@ -17,10 +17,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Checkout remote-debug-talk
+      - name: Checkout debugwand-talk repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          repository: savannahostrowski/remote-debug-talk
+          repository: savannahostrowski/debugwand-talk
           token: ${{ secrets.TALK_REPO_TOKEN }}
           path: _talks/remote-debug-talk
 
