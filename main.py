@@ -193,8 +193,32 @@ app = FastAPI(docs_url=None, redoc_url=None)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 TALKS_DIR = BASE_DIR / "talks"
-if TALKS_DIR.is_dir():
-    app.mount("/talks", StaticFiles(directory=TALKS_DIR, html=True), name="talks")
+
+
+@app.get("/talks/{talk}/")
+async def talk_index(talk: str):
+    index = TALKS_DIR / talk / "index.html"
+    if not index.is_file():
+        raise HTTPException(status_code=404)
+    return FileResponse(index)
+
+
+@app.get("/talks/{talk}/{path:path}")
+async def talk_asset(talk: str, path: str):
+    talk_dir = TALKS_DIR / talk
+    if not talk_dir.is_dir():
+        raise HTTPException(status_code=404)
+    requested = (talk_dir / path).resolve()
+    # Guard against path traversal
+    if not str(requested).startswith(str(talk_dir.resolve())):
+        raise HTTPException(status_code=404)
+    if requested.is_file():
+        return FileResponse(requested)
+    # SPA fallback: deep links like /talks/remote-debug/1 get the slide app's index.html
+    index = talk_dir / "index.html"
+    if index.is_file():
+        return FileResponse(index)
+    raise HTTPException(status_code=404)
 
 
 @app.exception_handler(StarletteHTTPException)
