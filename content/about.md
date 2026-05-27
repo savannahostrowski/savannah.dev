@@ -1,13 +1,17 @@
 ---
-title: About
+title: about
 hidemeta: true
 
 ---
 
-Hi, I'm Savannah. I'm on the [Python Steering Council](https://peps.python.org/pep-8107/) for 2026, the release manager for [Python 3.16 and 3.17](https://discuss.python.org/t/welcome-the-3-16-and-3-17-release-manager-savannah-bailey/), and a CPython core developer who helps where help is needed — the [JIT](https://peps.python.org/pep-0744/), [WASI](https://github.com/python/cpython/blob/main/Tools/wasm/README.md), [argparse](https://docs.python.org/3/library/argparse.html), and whatever else needs a hand. I currently work at [FastAPI Labs](https://fastapilabs.com/), building FastAPI Cloud (aka the best Python cloud).
+hi, i'm savannah (last name: sometimes ostrowski, sometimes bailey; both are fine by me). you probably ended up here because of my work in open source. i'm a python core developer, the release manager for python 3.16 and 3.17, and a member of the python steering council for 2026. i work at fastapi labs, building fastapi cloud (aka the best python cloud). i am also proudly canadian, but have been based in beautiful washington state since 2016.
 
-I write here mostly about CPython internals — making the parts of the interpreter that look intimidating less so. I also like containers, Kubernetes, self-hosting, and figuring out how things actually run in production. Expect posts about both, plus the occasional homelab story (I used to [run my sites off a Raspberry Pi cluster in my closet](/posts/i-run-a-server-farm-in-my-closet/) — this one now lives on FastAPI Cloud).
+i try to write here when i can, mostly about weird side projects or things i'm thinking about at the moment. outside of open source, i watch a lot of movies, am training for a half marathon later this year, and like being at home with my three cats (nori, miso, and momo). 
 
-Outside of code: three cats named after Japanese foods ([Nori, Miso, Momo](https://github.com/savannahostrowski/savannahostrowski/blob/main/cats.jpg)) and more films than I have time for. Canadian, Seattle-based since 2016.
-
-Find me on [Bluesky](https://bsky.app/profile/savannah.dev) or [email me](mailto:savannah@python.org).
+places you can find me online:
+- [github](https://github.com/savannahostrowski)
+- [bluesky](https://bsky.app/profile/savannah.dev)
+- [mastodon](https://fosstodon.org/@savannah)
+- [linkedin](https://www.linkedin.com/in/savannahostrowski/)
+- [letterboxd](https://letterboxd.com/seaquenched/)
+- [email](mailto:savannah@python.org)
