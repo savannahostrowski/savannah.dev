@@ -9,6 +9,7 @@ hi, i'm savannah (last name: sometimes ostrowski, sometimes bailey; both are fin
 i try to write here when i can, mostly about weird side projects or things i'm thinking about at the moment. outside of open source, i watch a lot of movies, am training for a half marathon later this year, and like being at home with my three cats (nori, miso, and momo). 
 
 places you can find me online:
+
 - [github](https://github.com/savannahostrowski)
 - [bluesky](https://bsky.app/profile/savannah.dev)
 - [mastodon](https://fosstodon.org/@savannah)
