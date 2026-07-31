@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Awaitable, Callable
 from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
@@ -13,6 +14,11 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from jinja2 import BaseLoader, Environment, FileSystemLoader
+from opentelemetry.exporter.otlp.proto.http.metric_exporter import OTLPMetricExporter
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.metrics import set_meter_provider
+from opentelemetry.sdk.metrics import MeterProvider
+from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 # ---------------------------------------------------------------------------
@@ -189,36 +195,58 @@ def render(
 # App
 # ---------------------------------------------------------------------------
 
+set_meter_provider(
+    MeterProvider(metric_readers=[PeriodicExportingMetricReader(OTLPMetricExporter())])
+)
+
 app = FastAPI(docs_url=None, redoc_url=None)
+FastAPIInstrumentor.instrument_app(app)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 TALKS_DIR = BASE_DIR / "talks"
 
 
-@app.get("/talks/{talk}/")
-async def talk_index(talk: str):
-    index = TALKS_DIR / talk / "index.html"
-    if not index.is_file():
-        raise HTTPException(status_code=404)
-    return FileResponse(index)
-
-
-@app.get("/talks/{talk}/{path:path}")
-async def talk_asset(talk: str, path: str):
-    talk_dir = TALKS_DIR / talk
-    if not talk_dir.is_dir():
-        raise HTTPException(status_code=404)
-    requested = (talk_dir / path).resolve()
-    # Guard against path traversal
-    if not str(requested).startswith(str(talk_dir.resolve())):
-        raise HTTPException(status_code=404)
-    if requested.is_file():
-        return FileResponse(requested)
-    # SPA fallback: deep links like /talks/remote-debug/1 get the slide app's index.html
-    index = talk_dir / "index.html"
-    if index.is_file():
+def _talk_index_endpoint(talk_dir: Path) -> Callable[[], Awaitable[FileResponse]]:
+    async def talk_index() -> FileResponse:
+        index = talk_dir / "index.html"
+        if not index.is_file():
+            raise HTTPException(status_code=404)
         return FileResponse(index)
-    raise HTTPException(status_code=404)
+
+    return talk_index
+
+
+def _talk_asset_endpoint(talk_dir: Path) -> Callable[[str], Awaitable[FileResponse]]:
+    async def talk_asset(path: str) -> FileResponse:
+        requested = (talk_dir / path).resolve()
+        if not requested.is_relative_to(talk_dir.resolve()):
+            raise HTTPException(status_code=404)
+        if requested.is_file():
+            return FileResponse(requested)
+        # SPA fallback: deep links like /talks/remote-debug/1 use index.html.
+        index = talk_dir / "index.html"
+        if index.is_file():
+            return FileResponse(index)
+        raise HTTPException(status_code=404)
+
+    return talk_asset
+
+
+if TALKS_DIR.is_dir():
+    for talk_dir in sorted(path for path in TALKS_DIR.iterdir() if path.is_dir()):
+        talk_slug = talk_dir.name
+        app.add_api_route(
+            f"/talks/{talk_slug}/",
+            _talk_index_endpoint(talk_dir),
+            methods=["GET"],
+            name=f"talk:{talk_slug}:index",
+        )
+        app.add_api_route(
+            f"/talks/{talk_slug}/{{path:path}}",
+            _talk_asset_endpoint(talk_dir),
+            methods=["GET"],
+            name=f"talk:{talk_slug}:asset",
+        )
 
 
 @app.exception_handler(StarletteHTTPException)
