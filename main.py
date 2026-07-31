@@ -275,23 +275,35 @@ async def index():
     )
 
 
-@app.get("/posts/{slug}/")
-async def post_page(slug: str):
-    posts = load_all_posts()
-    for i, post in enumerate(posts):
-        if post.slug == slug:
-            newer = posts[i - 1] if i > 0 else None
-            older = posts[i + 1] if i + 1 < len(posts) else None
-            return render(
-                "post.html",
-                page_path=f"/posts/{slug}/",
-                page_title=post.title,
-                page_description=post.description or post.summary or SITE_DESCRIPTION,
-                post=post,
-                newer=newer,
-                older=older,
-            )
-    raise HTTPException(status_code=404)
+def _post_endpoint(
+    post: Post, *, newer: Post | None, older: Post | None
+) -> Callable[[], Awaitable[HTMLResponse]]:
+    async def post_page() -> HTMLResponse:
+        return render(
+            "post.html",
+            page_path=f"/posts/{post.slug}/",
+            page_title=post.title,
+            page_description=post.description or post.summary or SITE_DESCRIPTION,
+            post=post,
+            newer=newer,
+            older=older,
+        )
+
+    return post_page
+
+
+_posts = load_all_posts()
+for _post_index, _post in enumerate(_posts):
+    app.add_api_route(
+        f"/posts/{_post.slug}/",
+        _post_endpoint(
+            _post,
+            newer=_posts[_post_index - 1] if _post_index > 0 else None,
+            older=_posts[_post_index + 1] if _post_index + 1 < len(_posts) else None,
+        ),
+        methods=["GET"],
+        name=f"post:{_post.slug}",
+    )
 
 
 @app.get("/posts/{slug}/images/{filename:path}")
