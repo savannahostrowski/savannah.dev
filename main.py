@@ -318,37 +318,52 @@ async def post_image(slug: str, filename: str):
     raise HTTPException(status_code=404)
 
 
-@app.get("/tags/{tag_slug}/")
-async def tag_page(tag_slug: str):
-    tag_map = load_tag_map()
-    if tag_slug not in tag_map:
-        raise HTTPException(status_code=404)
-    display, tagged = tag_map[tag_slug]
-    return render(
-        "tag.html",
-        page_path=f"/tags/{tag_slug}/",
-        page_title=f"Posts tagged: {display}",
-        page_description=f"Posts tagged with {display} on {SITE_NAME}'s blog.",
-        tag=display,
-        tag_slug=tag_slug,
-        posts=tagged,
-    )
+def _tag_page_endpoint(
+    tag_slug: str, *, display: str, posts: list[Post]
+) -> Callable[[], Awaitable[HTMLResponse]]:
+    async def tag_page() -> HTMLResponse:
+        return render(
+            "tag.html",
+            page_path=f"/tags/{tag_slug}/",
+            page_title=f"Posts tagged: {display}",
+            page_description=f"Posts tagged with {display} on {SITE_NAME}'s blog.",
+            tag=display,
+            tag_slug=tag_slug,
+            posts=posts,
+        )
+
+    return tag_page
 
 
-@app.get("/tags/{tag_slug}/index.xml")
-async def tag_feed(tag_slug: str):
-    tag_map = load_tag_map()
-    if tag_slug not in tag_map:
-        raise HTTPException(status_code=404)
-    display, tagged = tag_map[tag_slug]
-    env = _get_jinja_env()
-    template = env.get_template("feed.xml.j2")
-    body = template.render(
-        posts=tagged,
-        site_title=f"{SITE_NAME} — posts tagged {display}",
-        feed_path=f"/tags/{tag_slug}/index.xml",
+def _tag_feed_endpoint(
+    tag_slug: str, *, display: str, posts: list[Post]
+) -> Callable[[], Awaitable[Response]]:
+    async def tag_feed() -> Response:
+        env = _get_jinja_env()
+        template = env.get_template("feed.xml.j2")
+        body = template.render(
+            posts=posts,
+            site_title=f"{SITE_NAME} — posts tagged {display}",
+            feed_path=f"/tags/{tag_slug}/index.xml",
+        )
+        return Response(content=body, media_type="application/rss+xml")
+
+    return tag_feed
+
+
+for _tag_slug, (_tag_display, _tagged_posts) in sorted(load_tag_map().items()):
+    app.add_api_route(
+        f"/tags/{_tag_slug}/",
+        _tag_page_endpoint(_tag_slug, display=_tag_display, posts=_tagged_posts),
+        methods=["GET"],
+        name=f"tag:{_tag_slug}",
     )
-    return Response(content=body, media_type="application/rss+xml")
+    app.add_api_route(
+        f"/tags/{_tag_slug}/index.xml",
+        _tag_feed_endpoint(_tag_slug, display=_tag_display, posts=_tagged_posts),
+        methods=["GET"],
+        name=f"tag:{_tag_slug}:feed",
+    )
 
 
 @app.get("/index.xml")
