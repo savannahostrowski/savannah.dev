@@ -1,6 +1,6 @@
 # savannah.dev
 
-My personal site — blog, about, projects. Built with FastAPI, deployed on FastAPI Cloud.
+My personal site — blog, about, work, talks. Built with FastAPI, deployed on FastAPI Cloud.
 
 ## Local development
 
@@ -28,6 +28,8 @@ uv run fastapi deploy
 
 - **Posts**: drop a directory under `content/posts/<slug>/` with an `index.md` (frontmatter: `title`, `date`, `summary`, `tags`). Images go in `images/` next to it.
 - **Projects**: append to `content/projects.yml`.
+- **Python proposals**: edit `content/peps.yml`; these appear on the Work page with their authorship, status, and summary.
+- **Talks**: add entries to `content/talks.yml` in the order they should appear. Each has a `title`, `event`, `year`, and YouTube `youtube_id` (the value after `v=` in the video URL). `kind`, `summary`, and `slides_url` are optional.
 - **About**: edit `content/about.md`.
 
 ## Lint & typecheck

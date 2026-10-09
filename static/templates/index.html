@@ -1,22 +1,47 @@
 {% extends "base.html" %}
-
 {% block content %}
-<ul class="post-list">
-     {% for post in posts %}
-     <li class="post-item">
-         <div class="post-date">{{ post.date.strftime("%B %d, %Y") }}</div>
-         <h2><a href="/posts/{{ post.slug }}/">{{ post.title }}</a></h2>
-         {% if post.summary %}
-         <p class="post-summary">{{ post.summary }}</p>
-         {% endif %}
-         {% if post.tags %}
-         <div class="post-tags">
-             {% for tag in post.tags %}
-             <a href="/tags/{{ slugify(tag) }}/">{{ tag }}</a>
-             {% endfor %}
-         </div>
-         {% endif %}
-     </li>
-     {% endfor %}
-</ul>
+<section class="hero" aria-labelledby="intro-title">
+    <div class="hero-copy">
+        <h1 id="intro-title">hi, i'm<br><em>savannah.</em></h1>
+        <p class="hero-intro">I build and operate software and infrastructure, work on Python, and write here from time to time.</p>
+        <a class="text-link" href="/about/">a little more about me <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+        <span class="art-note">a little corner<br>of the internet.</span>
+        <svg class="desk-doodle" viewBox="0 0 420 330" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#26251f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m47 101 9-19 5 20 19 6-20 5-6 20-6-20-19-6z" fill="#ef7446"/>
+                <path d="m340 47 3-12 5 11 12 2-10 7-1 12-7-9-12 1z" fill="#f8d961"/>
+                <path d="M99 76q-6-15 6-26m6 27q-5-10 4-17"/>
+                <path d="m96 101 191-8q13 0 14 13l7 129q0 12-13 13l-194 5q-13 0-13-12l-5-126q-1-13 13-14z" fill="#f4f0e8"/>
+                <path d="m106 116 174-6 5 107-175 5z" fill="#26251f"/>
+                <path d="m191 251 1 27m-34 4 76-3"/>
+                <path d="m109 291 130-3 13 16-154 2z" fill="#f4f0e8"/>
+                <path d="m119 296 109-3" stroke-width="2"/>
+                <path d="m60 314 316-8"/>
+                <circle cx="196" cy="236" r="3" fill="#ef7446" stroke="none"/>
+                <path d="M310 296q-17-11-15-29l-3-45 21 14q15-6 29-1l15-16 3 46q1 23-20 30" fill="#f8d961"/>
+                <path d="M311 294q-14-28 0-31m31 31q9-19-1-28m-18 26v-14m8 14v-14m21 14q29 2 24-24-3-10-12-6"/>
+                <path d="m307 250 6 1m28-1 6-1m-23 9 4 3 4-3m-17 6-21-3m20 8-23 2m46-9 21-5m-20 10 21 2" stroke-width="2"/>
+                <path d="m51 213-7-9m-2 18-12-1m14 13-7 7"/>
+            </g>
+            <g fill="#d9ccf2" font-family="monospace" font-size="14"><text x="121" y="145" transform="rotate(-2 121 145)">&gt;&gt;&gt; print("hello")</text><text x="123" y="169" transform="rotate(-2 123 169)">hello, internet.</text><text x="123" y="199">&gt;&gt;&gt; <tspan fill="#f8d961">▍</tspan></text></g>
+        </svg>
+        <span class="art-caption">fig. 01 — my natural habitat</span>
+        <span class="python-sticker">probably thinking<br>about python <span>↝</span></span>
+    </div>
+</section>
+<div class="home-columns">
+    <section class="writing" id="writing" aria-labelledby="writing-title">
+        <div class="section-heading"><h2 id="writing-title">from the <em>keyboard.</em></h2><span class="eyebrow">{{ posts | length }} entries</span></div>
+        {% include "post_list.html" %}
+    </section>
+    <aside class="project-sidebar" aria-labelledby="work-title">
+        <div class="sidebar-heading"><span class="eyebrow">selected projects</span><h2 id="work-title">work <span aria-hidden="true">↴</span></h2></div>
+        {% for project in projects[:3] %}
+        <div class="mini-project"><span class="project-index" aria-hidden="true">{{ '%02d' | format(loop.index) }} /</span><h3><a href="{{ project.links[0].url }}" target="_blank" rel="noopener">{{ project.name }} <span aria-hidden="true">↗</span></a></h3><p>{{ project.tagline }}</p></div>
+        {% endfor %}
+        <a href="/work/" class="text-link">all work <span aria-hidden="true">↗</span></a>
+    </aside>
+</div>
 {% endblock %}

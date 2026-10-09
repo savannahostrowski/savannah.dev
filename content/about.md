@@ -4,11 +4,13 @@ hidemeta: true
 
 ---
 
-hi, i'm savannah (last name: sometimes ostrowski, sometimes bailey; both are fine by me). you probably ended up here because of my work in open source. i'm a python core developer, the release manager for python 3.16 and 3.17, and a member of the python steering council for 2026. i work at fastapi labs, building fastapi cloud (aka the best python cloud). i am also proudly canadian, but have been based in beautiful washington state since 2016.
+hi, i'm savannah (last name: sometimes ostrowski, sometimes bailey; both are fine by me). i'm a software engineer at fastapi labs, where i work on infrastructure, observability, and reliability for fastapi cloud. previously, i worked on developer platforms at microsoft, docker, and snowflake.
 
-i try to write here when i can, mostly about weird side projects or things i'm thinking about at the moment. outside of open source, i watch a lot of movies, am training for a half marathon later this year, and like being at home with my three cats (nori, miso, and momo). 
+in open source, i'm a python core developer, the release manager for python 3.16 and 3.17, and a member of the python steering council for 2026. i maintain parts of cpython, including the jit compiler and argparse. i was also the inaugural board treasurer for project jupyter.
 
-places you can find me online:
+i'm proudly canadian and have been based in washington state since 2016. outside of work, i watch a lot of movies, am training for a half marathon later this year, and like being at home with my three cats (nori, miso, and momo). i write here when i can, about things i'm building or thinking about.
+
+## find me online
 
 - [github](https://github.com/savannahostrowski)
 - [bluesky](https://bsky.app/profile/savannah.dev)

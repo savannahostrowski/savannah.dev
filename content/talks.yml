@@ -1,0 +1,36 @@
+- title: "The coolest feature in Python 3.14: sys.remote_exec()"
+  event: EuroPython
+  year: 2026
+  youtube_id: bVYh2LDPG3M
+  summary: Debugging live Python processes without restarting them, with sys.remote_exec(), debugpy, and debugwand.
+
+- title: Python Steering Council Update
+  event: EuroPython
+  year: 2026
+  youtube_id: yym0JwVCTlA
+
+- title: Python Steering Council Panel
+  event: PyCon US
+  year: 2026
+  kind: Panel
+  youtube_id: arE9g0uMDq4
+
+- title: You don’t have to be a compiler engineer to work on Python
+  event: EuroPython
+  year: 2025
+  kind: Keynote
+  youtube_id: WGXXxGLBVF4
+  summary: My path into CPython, and the many ways to contribute beyond compilers and interpreter internals.
+  slides_url: https://github.com/savannahostrowski/europython-2025/blob/main/talk.pdf
+
+- title: Quickly build and deploy OpenAI apps on Azure, infused with your own data
+  event: GitHub Universe
+  year: 2023
+  youtube_id: j8i-OM5kwiY
+  summary: Building and deploying an AI application with VS Code, Azure Developer CLI, GitHub Actions, and Azure OpenAI.
+
+- title: "Azure Developer CLI: GitHub to cloud in minutes"
+  event: GitHub Universe
+  year: 2022
+  youtube_id: 9z3PiHSCcYs
+  summary: Taking an application from local development to the cloud with Azure Developer CLI.

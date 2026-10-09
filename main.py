@@ -11,7 +11,7 @@ import frontmatter
 import markdown
 import yaml
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from jinja2 import BaseLoader, Environment, FileSystemLoader
 from opentelemetry.exporter.otlp.proto.http.metric_exporter import OTLPMetricExporter
@@ -28,8 +28,8 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 SITE_URL = "https://savannah.dev"
 SITE_NAME = "Savannah Ostrowski"
 SITE_DESCRIPTION = (
-    "Python Steering Council member, CPython Release Manager (3.16 and 3.17), "
-    "Python Core Developer, and Engineer at FastAPI Labs."
+    "Software engineer working on infrastructure, observability, and reliability at FastAPI Labs. "
+    "CPython core developer, Python 3.16 and 3.17 release manager, and Steering Council member."
 )
 SITE_OG_IMAGE = "/static/img/social-share.png"
 
@@ -147,6 +147,22 @@ def load_projects() -> list[dict[str, Any]]:
     if not projects_file.exists():
         return []
     return yaml.safe_load(projects_file.read_text()) or []
+
+
+@lru_cache(maxsize=1)
+def load_peps() -> list[dict[str, Any]]:
+    peps_file = CONTENT_DIR / "peps.yml"
+    if not peps_file.exists():
+        return []
+    return yaml.safe_load(peps_file.read_text()) or []
+
+
+@lru_cache(maxsize=1)
+def load_talks() -> list[dict[str, Any]]:
+    talks_file = CONTENT_DIR / "talks.yml"
+    if not talks_file.exists():
+        return []
+    return yaml.safe_load(talks_file.read_text()) or []
 
 
 # ---------------------------------------------------------------------------
@@ -270,8 +286,9 @@ async def index():
     return render(
         "index.html",
         page_path="/",
-        page_title="Savannah's Blog",
+        page_title="Savannah Ostrowski",
         posts=posts,
+        projects=load_projects(),
     )
 
 
@@ -403,13 +420,30 @@ async def about():
 
 
 @app.get("/projects/")
-async def projects():
+async def projects_redirect():
+    return RedirectResponse("/work/", status_code=301)
+
+
+@app.get("/work/")
+async def work():
     return render(
-        "projects.html",
-        page_path="/projects/",
-        page_title="Projects",
-        page_description="Open source projects by Savannah Ostrowski.",
+        "work.html",
+        page_path="/work/",
+        page_title="Work",
+        page_description="Open source software and Python proposals by Savannah Ostrowski.",
         projects=load_projects(),
+        peps=load_peps(),
+    )
+
+
+@app.get("/talks/")
+async def talks():
+    return render(
+        "talks.html",
+        page_path="/talks/",
+        page_title="Talks",
+        page_description="Talk recordings and slides by Savannah Ostrowski.",
+        talks=load_talks(),
     )
 
 

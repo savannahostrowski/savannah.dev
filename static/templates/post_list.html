@@ -1,0 +1,12 @@
+<ul class="post-list">
+    {% for post in posts %}
+    <li class="post-item">
+        <div class="post-date"><time datetime="{{ post.date.isoformat() }}">{{ post.date.strftime("%b %d, %Y") }}</time><span class="post-number" aria-hidden="true">/ {{ '%02d' | format(loop.index) }}</span></div>
+        <div class="post-item-content">
+            <h{{ list_heading | default(3) }}><a href="/posts/{{ post.slug }}/">{{ post.title }} <span class="post-arrow" aria-hidden="true">↗</span></a></h{{ list_heading | default(3) }}>
+            {% if post.summary %}<p class="post-summary">{{ post.summary }}</p>{% endif %}
+            {% if post.tags %}<div class="post-tags">{% for tag in post.tags %}<a href="/tags/{{ slugify(tag) }}/">{{ tag }}</a>{% endfor %}</div>{% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>

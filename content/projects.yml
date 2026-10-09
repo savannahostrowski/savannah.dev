@@ -1,3 +1,19 @@
+- name: CPython
+  tagline: Python’s interpreter and standard library. I’m a core developer, Python 3.16 and 3.17 release manager, and Steering Council member.
+  links:
+    - {label: GitHub, url: "https://github.com/python/cpython"}
+
+- name: FastAPI VS Code extension
+  tagline: I created and maintain the FastAPI extension for VS Code.
+  links:
+    - {label: Marketplace, url: "https://marketplace.visualstudio.com/items?itemName=FastAPILabs.fastapi-vscode"}
+    - {label: GitHub, url: "https://github.com/fastapi/fastapi-vscode"}
+
+- name: fastapi-new
+  tagline: I built the command-line tool for creating a new FastAPI project, with uv configuration ready to go.
+  links:
+    - {label: GitHub, url: "https://github.com/fastapi/fastapi-new"}
+
 - name: doesjitgobrrr
   tagline: An unofficial dashboard tracking CPython's JIT performance over time, powered by a four-machine home benchmarking lab.
   links:

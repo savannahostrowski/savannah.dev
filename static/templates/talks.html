@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-heading page-heading--ruled">
+    <h1>talks<em>.</em></h1>
+    <p class="speaking-invite">Want me to speak at your event? <a href="mailto:savannah@python.org"><strong>Get in touch</strong></a>.</p>
+</div>
+<ul class="talk-list">
+    {% for talk in talks %}
+    <li class="talk-item">
+        <a class="talk-thumbnail" href="https://www.youtube.com/watch?v={{ talk.youtube_id }}" target="_blank" rel="noopener" aria-label="Watch {{ talk.title }} on YouTube">
+            <img src="https://i.ytimg.com/vi/{{ talk.youtube_id }}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+            <span class="talk-play" aria-hidden="true">▶</span>
+        </a>
+        <div class="talk-copy">
+            <p class="eyebrow">{{ talk.event }} / {{ talk.year }}{% if talk.kind %} / {{ talk.kind }}{% endif %}</p>
+            <h2 class="talk-title"><a href="https://www.youtube.com/watch?v={{ talk.youtube_id }}" target="_blank" rel="noopener">{{ talk.title }}</a></h2>
+            {% if talk.summary %}<p class="talk-summary">{{ talk.summary }}</p>{% endif %}
+            <div class="talk-links">
+                <a class="text-link" href="https://www.youtube.com/watch?v={{ talk.youtube_id }}" target="_blank" rel="noopener" aria-label="Watch {{ talk.title }} on YouTube (opens in a new tab)">watch on youtube <span aria-hidden="true">↗</span></a>
+                {% if talk.slides_url %}<a class="text-link" href="{{ talk.slides_url }}" target="_blank" rel="noopener" aria-label="Slides for {{ talk.title }} (opens in a new tab)">slides <span aria-hidden="true">↗</span></a>{% endif %}
+            </div>
+        </div>
+    </li>
+    {% else %}
+    <li class="talk-empty">Recordings coming soon.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

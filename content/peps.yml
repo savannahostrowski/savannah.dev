@@ -1,0 +1,30 @@
+- number: 836
+  title: 'JIT Go Brrr: The Path to a Supported JIT Compiler for CPython'
+  url: https://peps.python.org/pep-0836/
+  role: Co-author
+  status: Draft
+  summary: A roadmap and measurable goals for making CPython’s JIT a supported, non-experimental feature.
+- number: 831
+  title: 'Frame Pointers Everywhere: Enabling System-Level Observability for Python'
+  url: https://peps.python.org/pep-0831/
+  role: Co-author
+  status: Final
+  summary: Enabling frame pointers by default to improve profiling, debugging, and tracing across Python and native code.
+- number: 826
+  title: Python 3.16 Release Schedule
+  url: https://peps.python.org/pep-0826/
+  role: Author
+  status: Active
+  summary: The development and release schedule for Python 3.16, which I manage.
+- number: 774
+  title: Removing the LLVM requirement for JIT builds
+  url: https://peps.python.org/pep-0774/
+  role: Author
+  status: Deferred
+  summary: A proposal to make JIT builds simpler by shipping pre-generated machine-code templates in the CPython repository.
+- number: 744
+  title: JIT Compilation
+  url: https://peps.python.org/pep-0744/
+  role: Co-author
+  status: Draft
+  summary: The design, tradeoffs, and future direction of CPython’s experimental JIT compiler.
