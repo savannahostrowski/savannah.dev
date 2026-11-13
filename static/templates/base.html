@@ -6,7 +6,8 @@
      <title>{{ site_title }} — savannah.dev</title>
      <meta name="description" content="{{ page_description }}">
      <meta name="author" content="{{ site_name }}">
-     <meta name="theme-color" content="#f4f0e8">
+     <meta name="theme-color" content="#1c211f">
+     <meta name="color-scheme" content="dark">
      <link rel="canonical" href="{{ page_url }}">
      <link rel="icon" type="image/x-icon" href="/favicon.ico">
      <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
@@ -23,39 +24,28 @@
      <meta name="twitter:title" content="{{ site_title }}">
      <meta name="twitter:description" content="{{ page_description }}">
      <meta name="twitter:image" content="{{ page_image }}">
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="/static/css/site.css?v=20261009-14">
-     <script src="/static/js/site.js?v=20261009-14" defer></script>
+     <link rel="stylesheet" href="/static/css/site.css?v=20261113-7">
+     <script src="/static/js/site.js?v=20261113-1" defer></script>
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="container">
         <header class="site-header">
-            <a href="/" class="site-title" aria-label="savannah.dev home"><span class="brand-flower" aria-hidden="true">✳</span> savannah.dev</a>
+            <a href="/" class="site-title" aria-label="savannah.dev home">savannah<span>.dev</span></a>
             <nav class="site-nav" aria-label="Main navigation">
                 <a href="/#writing"{% if page_url == site_url + '/' or '/posts/' in page_url or '/tags/' in page_url %} aria-current="page"{% endif %}>writing</a>
-                <a href="/work/"{% if page_url == site_url + '/work/' %} aria-current="page"{% endif %}>work</a>
                 <a href="/talks/"{% if page_url == site_url + '/talks/' %} aria-current="page"{% endif %}>talks</a>
                 <a href="/about/"{% if page_url == site_url + '/about/' %} aria-current="page"{% endif %}>about</a>
-                <a href="/index.xml" class="nav-rss" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
             </nav>
         </header>
         <main id="main" tabindex="-1">{% block content %}{% endblock %}</main>
         <footer class="site-footer">
-            <div class="footer-top">
-                <div><p class="eyebrow">the internet is better with friends</p><a class="footer-hello" href="mailto:savannah@python.org">say hello <span aria-hidden="true">↗</span></a></div>
-                <div class="social-links">
-                    <a href="https://github.com/savannahostrowski" target="_blank" rel="noopener">github ↗</a>
-                    <a href="https://bsky.app/profile/savannah.dev" target="_blank" rel="noopener">bluesky ↗</a>
-                    <a href="https://www.linkedin.com/in/savannahostrowski/" target="_blank" rel="noopener">linkedin ↗</a>
-                    <a href="https://github.com/sponsors/savannahostrowski" target="_blank" rel="noopener">sponsor ♡</a>
-                </div>
-            </div>
-            <div class="footer-bottom"><span>© 2024–{{ current_year }} savannah ostrowski</span></div>
+            <p class="copyright">© 2024–{{ current_year }} Savannah Ostrowski</p>
+            <nav class="footer-links" aria-label="Site links">
+                <a href="https://github.com/sponsors/savannahostrowski" target="_blank" rel="noopener">Sponsor</a>
+                <a href="/index.xml" aria-label="RSS feed">RSS</a>
+            </nav>
         </footer>
     </div>
-    <button class="scroll-top" aria-label="Scroll to top" hidden>↑</button>
 </body>
 </html>

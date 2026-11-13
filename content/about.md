@@ -1,20 +1,15 @@
 ---
-title: about
+title: About me
 hidemeta: true
 
 ---
 
-hi, i'm savannah (last name: sometimes ostrowski, sometimes bailey; both are fine by me). i'm a software engineer at fastapi labs, where i work on infrastructure, observability, and reliability for fastapi cloud. previously, i worked on developer platforms at microsoft, docker, and snowflake.
+Hey there, I'm Savannah Ostrowski. I'm a Python core developer, the release manager for Python 3.16 and 3.17, and a member of the Python Steering Council for the 2026 term. I'm passionate about open source software and communities, infrastructure, observability, developer experience, and physical computing.
 
-in open source, i'm a python core developer, the release manager for python 3.16 and 3.17, and a member of the python steering council for 2026. i maintain parts of cpython, including the jit compiler and argparse. i was also the inaugural board treasurer for project jupyter.
+I'm a self-taught engineer and do not hold a degree in Computer Science. I started learning to code with Python 2.7 to automate tasks in geospatial software. I talk more about that experience and how it's helped me contribute to Python in [my EuroPython 2025 keynote](https://www.youtube.com/watch?v=WGXXxGLBVF4).
 
-i'm proudly canadian and have been based in washington state since 2016. outside of work, i watch a lot of movies, am training for a half marathon later this year, and like being at home with my three cats (nori, miso, and momo). i write here when i can, about things i'm building or thinking about.
+In open source, I work across CPython and related projects, helping where help is needed. Right now, I'm mostly working on performance tooling, argparse in the standard library, and release management. I've also worked quite extensively on CPython's experimental JIT compiler.
 
-## find me online
+I currently work at [FastAPI Labs](https://fastapicloud.com/), where I'm helping build FastAPI Cloud and open source projects like our VS Code extension. I mostly work on infrastructure, FinOps, and observability, as well as bringing new Python capabilities into the platform.
 
-- [github](https://github.com/savannahostrowski)
-- [bluesky](https://bsky.app/profile/savannah.dev)
-- [mastodon](https://fosstodon.org/@savannah)
-- [linkedin](https://www.linkedin.com/in/savannahostrowski/)
-- [letterboxd](https://letterboxd.com/seaquenched/)
-- [email](mailto:savannah@python.org)
+I'm Canadian but have been living in the US for over 10 years. I currently live in the Seattle area with my husband and three cats. In my spare time, you're most likely to find me training for a half marathon, watching films, cooking, playing video games, or trying to restore my 1976 home to her former glory.
