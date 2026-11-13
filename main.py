@@ -142,22 +142,6 @@ def load_tag_map() -> dict[str, tuple[str, list[Post]]]:
 
 
 @lru_cache(maxsize=1)
-def load_projects() -> list[dict[str, Any]]:
-    projects_file = CONTENT_DIR / "projects.yml"
-    if not projects_file.exists():
-        return []
-    return yaml.safe_load(projects_file.read_text()) or []
-
-
-@lru_cache(maxsize=1)
-def load_peps() -> list[dict[str, Any]]:
-    peps_file = CONTENT_DIR / "peps.yml"
-    if not peps_file.exists():
-        return []
-    return yaml.safe_load(peps_file.read_text()) or []
-
-
-@lru_cache(maxsize=1)
 def load_talks() -> list[dict[str, Any]]:
     talks_file = CONTENT_DIR / "talks.yml"
     if not talks_file.exists():
@@ -288,7 +272,6 @@ async def index():
         page_path="/",
         page_title="Savannah Ostrowski",
         posts=posts,
-        projects=load_projects(),
     )
 
 
@@ -420,20 +403,9 @@ async def about():
 
 
 @app.get("/projects/")
-async def projects_redirect():
-    return RedirectResponse("/work/", status_code=301)
-
-
 @app.get("/work/")
-async def work():
-    return render(
-        "work.html",
-        page_path="/work/",
-        page_title="Work",
-        page_description="Open source software and Python proposals by Savannah Ostrowski.",
-        projects=load_projects(),
-        peps=load_peps(),
-    )
+async def work_redirect():
+    return RedirectResponse("/about/", status_code=301)
 
 
 @app.get("/talks/")

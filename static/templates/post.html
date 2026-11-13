@@ -5,14 +5,14 @@
 {% if post.slug != 'about' %}
 <a class="text-link back-link" href="/#writing">← back to writing</a>
 {% endif %}
-<div class="{% if post.slug == 'about' %}page-heading page-heading--ruled{% else %}post-header{% endif %}">
+<div class="{% if post.slug == 'about' %}page-heading{% else %}post-header{% endif %}">
     {% if post.slug == 'about' %}
-    <h1>a little <em>about me.</em></h1>
+    <h1>About me</h1>
     {% else %}
     <h1>{{ post.title }}</h1>
     {% endif %}
     {% if not post.hide_meta %}
-    <div class="post-date">{{ post.date.strftime("%B %d, %Y") }}</div>
+    <div class="post-date"><time datetime="{{ post.date.isoformat() }}">{{ post.date.strftime("%B %d, %Y") }}</time></div>
     {% if post.tags %}
     <div class="post-tags">
         {% for tag in post.tags %}
@@ -25,6 +25,9 @@
 <div class="post-body">
     {{ post.body_html | safe }}
 </div>
+{% if post.slug == 'about' %}
+{% include "bio_links.html" %}
+{% endif %}
 {% if newer or older %}
 <nav class="post-nav" aria-label="Post navigation">
     {% if older %}
