@@ -2,15 +2,12 @@
 
 {% block content %}
 <article class="reading-page{% if post.slug == 'about' %} about-page{% endif %}">
-{% if post.slug != 'about' %}
-<a class="text-link back-link" href="/#writing">← back to writing</a>
-{% endif %}
-<div class="{% if post.slug == 'about' %}page-heading{% else %}post-header{% endif %}">
-    {% if post.slug == 'about' %}
-    <h1>About me</h1>
-    {% else %}
+{% if post.slug == 'about' %}
+<h1 class="visually-hidden">About me</h1>
+{% else %}
+<a class="text-link back-link" href="/">← back to writing</a>
+<div class="post-header">
     <h1>{{ post.title }}</h1>
-    {% endif %}
     {% if not post.hide_meta %}
     <div class="post-date"><time datetime="{{ post.date.isoformat() }}">{{ post.date.strftime("%B %d, %Y") }}</time></div>
     {% if post.tags %}
@@ -22,6 +19,7 @@
     {% endif %}
     {% endif %}
 </div>
+{% endif %}
 <div class="post-body">
     {{ post.body_html | safe }}
 </div>

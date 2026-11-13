@@ -97,6 +97,7 @@ main { flex: 1; min-width: 0; }
 .talk-meta { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0 0 8px; }
 
 .reading-page { min-width: 0; }
+.about-page { padding-top: 48px; }
 .back-link { margin-top: 32px; }
 .post-header { padding: 28px 0 32px; }
 .post-header h1 { max-width: 700px; }
@@ -170,6 +171,7 @@ main { flex: 1; min-width: 0; }
     .post-item { grid-template-columns: 1fr; gap: 6px; padding: 20px 0; }
     .post-date { padding-top: 0; }
     .page-heading { padding: 36px 0 26px; }
+    .about-page { padding-top: 36px; }
     .post-body { font-size: 16px; }
     .post-body pre { padding: 16px; font-size: 12px; }
     .post-nav { grid-template-columns: 1fr; gap: 22px; }

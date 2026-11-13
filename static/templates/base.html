@@ -24,7 +24,7 @@
      <meta name="twitter:title" content="{{ site_title }}">
      <meta name="twitter:description" content="{{ page_description }}">
      <meta name="twitter:image" content="{{ page_image }}">
-     <link rel="stylesheet" href="/static/css/site.css?v=20261113-7">
+     <link rel="stylesheet" href="/static/css/site.css?v=20261113-8">
      <script src="/static/js/site.js?v=20261113-1" defer></script>
 </head>
 <body>
@@ -33,7 +33,7 @@
         <header class="site-header">
             <a href="/" class="site-title" aria-label="savannah.dev home">savannah<span>.dev</span></a>
             <nav class="site-nav" aria-label="Main navigation">
-                <a href="/#writing"{% if page_url == site_url + '/' or '/posts/' in page_url or '/tags/' in page_url %} aria-current="page"{% endif %}>writing</a>
+                <a href="/"{% if page_url == site_url + '/' or '/posts/' in page_url or '/tags/' in page_url %} aria-current="page"{% endif %}>writing</a>
                 <a href="/talks/"{% if page_url == site_url + '/talks/' %} aria-current="page"{% endif %}>talks</a>
                 <a href="/about/"{% if page_url == site_url + '/about/' %} aria-current="page"{% endif %}>about</a>
             </nav>
